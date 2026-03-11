@@ -10,6 +10,7 @@ import {
   ShieldCheck,
 } from "lucide-react"
 import { AnimatedCounter } from "@/components/ui/AnimatedCounter"
+import { PinContainer } from "@/components/ui/3d-pin"
 import { GlowCard } from "@/components/ui/GlowCard"
 import { SectionLabel } from "@/components/ui/SectionLabel"
 
@@ -105,13 +106,17 @@ export function Capabilities() {
           className="mt-16 grid gap-4 rounded-3xl border border-zyra-border-subtle bg-zyra-bg-card/50 p-6 sm:grid-cols-2 xl:grid-cols-4"
         >
           {METRICS.map((metric) => (
-            <motion.div key={metric.label} variants={fadeUp} className="rounded-2xl border border-zyra-border-subtle bg-zyra-bg-primary/60 p-6 text-center">
-              <div className="font-heading text-4xl font-bold text-zyra-text-primary sm:text-5xl">
-                <AnimatedCounter value={metric.value} suffix={metric.suffix} />
-              </div>
-              <p className="mt-3 text-sm uppercase tracking-[0.22em] text-zyra-text-secondary">
-                {metric.label}
-              </p>
+            <motion.div key={metric.label} variants={fadeUp}>
+              <PinContainer title={metric.label} className="h-full" containerClassName="h-full">
+                <div className="rounded-2xl border border-zyra-border-subtle bg-zyra-bg-primary/60 p-6 text-center">
+                  <div className="font-heading text-4xl font-bold text-zyra-text-primary sm:text-5xl">
+                    <AnimatedCounter value={metric.value} suffix={metric.suffix} />
+                  </div>
+                  <p className="mt-3 text-sm uppercase tracking-[0.22em] text-zyra-text-secondary">
+                    {metric.label}
+                  </p>
+                </div>
+              </PinContainer>
             </motion.div>
           ))}
         </motion.div>
@@ -131,17 +136,19 @@ export function Capabilities() {
 
             return (
               <motion.div key={item.title} variants={fadeUp}>
-                <GlowCard className="h-full">
-                  <div className="mb-6 flex h-12 w-12 items-center justify-center rounded-lg border border-zyra-accent-neon/20 bg-zyra-accent-glow">
-                    <Icon className="h-6 w-6 text-zyra-accent-neon" />
-                  </div>
-                  <h3 className="font-heading text-2xl font-semibold text-zyra-text-primary">
-                    {item.title}
-                  </h3>
-                  <p className="mt-4 leading-relaxed text-zyra-text-secondary">
-                    {item.description}
-                  </p>
-                </GlowCard>
+                <PinContainer title={item.title} className="h-full" containerClassName="h-full">
+                  <GlowCard className="h-full">
+                    <div className="mb-6 flex h-12 w-12 items-center justify-center rounded-lg border border-zyra-accent-neon/20 bg-zyra-accent-glow">
+                      <Icon className="h-6 w-6 text-zyra-accent-neon" />
+                    </div>
+                    <h3 className="font-heading text-2xl font-semibold text-zyra-text-primary">
+                      {item.title}
+                    </h3>
+                    <p className="mt-4 leading-relaxed text-zyra-text-secondary">
+                      {item.description}
+                    </p>
+                  </GlowCard>
+                </PinContainer>
               </motion.div>
             )
           })}

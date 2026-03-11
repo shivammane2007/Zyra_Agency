@@ -3,6 +3,7 @@
 import * as React from "react"
 import { motion, Variants } from "framer-motion"
 import { Brain, Palette, Bug, Rocket } from "lucide-react"
+import { PinContainer } from "@/components/ui/3d-pin"
 import { SectionLabel } from "@/components/ui/SectionLabel"
 import { GlowCard } from "@/components/ui/GlowCard"
 
@@ -85,17 +86,19 @@ export function Philosophy() {
             const Icon = pillar.icon
             return (
               <motion.div key={pillar.title} variants={fadeUpVariants}>
-                <GlowCard className="h-full">
-                  <div className="mb-6 flex h-12 w-12 items-center justify-center rounded-lg bg-zyra-accent-glow border border-zyra-accent-neon/20">
-                    <Icon className="h-6 w-6 text-zyra-accent-neon" />
-                  </div>
-                  <h3 className="mb-3 font-heading text-xl font-semibold text-zyra-text-primary">
-                    {pillar.title}
-                  </h3>
-                  <p className="text-zyra-text-secondary leading-relaxed">
-                    {pillar.description}
-                  </p>
-                </GlowCard>
+                <PinContainer title={pillar.title} containerClassName="h-full" className="h-full">
+                  <GlowCard className="h-full">
+                    <div className="mb-6 flex h-12 w-12 items-center justify-center rounded-lg bg-zyra-accent-glow border border-zyra-accent-neon/20">
+                      <Icon className="h-6 w-6 text-zyra-accent-neon" />
+                    </div>
+                    <h3 className="mb-3 font-heading text-xl font-semibold text-zyra-text-primary">
+                      {pillar.title}
+                    </h3>
+                    <p className="text-zyra-text-secondary leading-relaxed">
+                      {pillar.description}
+                    </p>
+                  </GlowCard>
+                </PinContainer>
               </motion.div>
             )
           })}

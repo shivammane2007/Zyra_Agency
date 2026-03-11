@@ -1,6 +1,7 @@
 "use client"
 
 import { motion } from "framer-motion"
+import { PinContainer } from "@/components/ui/3d-pin"
 import { SectionLabel } from "@/components/ui/SectionLabel"
 
 const STACK = [
@@ -38,29 +39,32 @@ export function TechStack() {
 
         <div className="mt-16 grid gap-6 lg:grid-cols-4">
           {STACK.map((group, index) => (
-            <motion.article
+            <motion.div
               key={group.label}
               initial="hidden"
               whileInView="visible"
               viewport={{ once: true }}
               variants={fadeUp}
               transition={{ delay: index * 0.06 }}
-              className="rounded-3xl border border-zyra-border-subtle bg-zyra-bg-card p-8"
             >
-              <p className="text-xs uppercase tracking-[0.24em] text-zyra-accent-neon">
-                {group.label}
-              </p>
-              <div className="mt-6 flex flex-wrap gap-3">
-                {group.items.map((item) => (
-                  <span
-                    key={item}
-                    className="rounded-full border border-zyra-border-default bg-zyra-bg-primary px-4 py-2 text-sm text-zyra-text-secondary"
-                  >
-                    {item}
-                  </span>
-                ))}
-              </div>
-            </motion.article>
+              <PinContainer title={group.label} className="h-full" containerClassName="h-full">
+                <article className="rounded-3xl border border-zyra-border-subtle bg-zyra-bg-card p-8">
+                  <p className="text-xs uppercase tracking-[0.24em] text-zyra-accent-neon">
+                    {group.label}
+                  </p>
+                  <div className="mt-6 flex flex-wrap gap-3">
+                    {group.items.map((item) => (
+                      <span
+                        key={item}
+                        className="rounded-full border border-zyra-border-default bg-zyra-bg-primary px-4 py-2 text-sm text-zyra-text-secondary"
+                      >
+                        {item}
+                      </span>
+                    ))}
+                  </div>
+                </article>
+              </PinContainer>
+            </motion.div>
           ))}
         </div>
       </div>

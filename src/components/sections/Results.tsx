@@ -3,6 +3,7 @@
 import { motion } from "framer-motion"
 import { Quote } from "lucide-react"
 import { AnimatedCounter } from "@/components/ui/AnimatedCounter"
+import { PinContainer } from "@/components/ui/3d-pin"
 import { SectionLabel } from "@/components/ui/SectionLabel"
 
 const STATS = [
@@ -59,12 +60,15 @@ export function Results() {
                 whileInView="visible"
                 viewport={{ once: true }}
                 variants={fadeUp}
-                className="rounded-3xl border border-zyra-border-subtle bg-zyra-bg-card p-8"
               >
-                <div className="font-heading text-4xl font-bold text-zyra-text-primary sm:text-5xl">
-                  <AnimatedCounter value={stat.value} suffix={stat.suffix} />
-                </div>
-                <p className="mt-4 leading-relaxed text-zyra-text-secondary">{stat.label}</p>
+                <PinContainer title={stat.label} className="h-full" containerClassName="h-full">
+                  <div className="rounded-3xl border border-zyra-border-subtle bg-zyra-bg-card p-8">
+                    <div className="font-heading text-4xl font-bold text-zyra-text-primary sm:text-5xl">
+                      <AnimatedCounter value={stat.value} suffix={stat.suffix} />
+                    </div>
+                    <p className="mt-4 leading-relaxed text-zyra-text-secondary">{stat.label}</p>
+                  </div>
+                </PinContainer>
               </motion.div>
             ))}
           </div>
@@ -73,21 +77,24 @@ export function Results() {
             whileInView="visible"
             viewport={{ once: true }}
             variants={fadeUp}
-            className="rounded-3xl border border-zyra-border-subtle bg-zyra-bg-card p-8"
           >
-            <Quote className="h-8 w-8 text-zyra-accent-neon" />
-            <div className="mt-8 space-y-8">
-              {QUOTES.map((item) => (
-                <blockquote key={item.author}>
-                  <p className="text-lg leading-relaxed text-zyra-text-primary">
-                    {item.quote}
-                  </p>
-                  <footer className="mt-4 text-sm uppercase tracking-[0.2em] text-zyra-text-secondary">
-                    {item.author}
-                  </footer>
-                </blockquote>
-              ))}
-            </div>
+            <PinContainer title="Testimonials" className="h-full" containerClassName="h-full">
+              <div className="rounded-3xl border border-zyra-border-subtle bg-zyra-bg-card p-8">
+                <Quote className="h-8 w-8 text-zyra-accent-neon" />
+                <div className="mt-8 space-y-8">
+                  {QUOTES.map((item) => (
+                    <blockquote key={item.author}>
+                      <p className="text-lg leading-relaxed text-zyra-text-primary">
+                        {item.quote}
+                      </p>
+                      <footer className="mt-4 text-sm uppercase tracking-[0.2em] text-zyra-text-secondary">
+                        {item.author}
+                      </footer>
+                    </blockquote>
+                  ))}
+                </div>
+              </div>
+            </PinContainer>
           </motion.div>
         </div>
       </div>

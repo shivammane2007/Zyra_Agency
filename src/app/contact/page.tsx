@@ -6,8 +6,12 @@ import { Mail, MapPin, Phone } from "lucide-react"
 import { useForm } from "react-hook-form"
 import { Navbar } from "@/components/navbar/Navbar"
 import { Footer } from "@/components/sections/Footer"
+import { Calendar } from "@/components/ui/calendar"
+import { LocationTag } from "@/components/ui/location-tag"
+import { WorldMap } from "@/components/ui/map"
 import { SectionLabel } from "@/components/ui/SectionLabel"
 import { ShootingStars } from "@/components/ui/shooting_star"
+import { TextDisperse } from "@/components/ui/text-disperse"
 import { contactSchema, type ContactFormValues } from "@/lib/contact-schema"
 
 const CONTACT_DETAILS = [
@@ -25,6 +29,25 @@ const CONTACT_DETAILS = [
     icon: MapPin,
     label: "Base",
     value: "Remote-first, global delivery",
+  },
+]
+
+const CONTACT_ROUTES = [
+  {
+    start: { lat: 37.7749, lng: -122.4194, label: "San Francisco" },
+    end: { lat: 51.5074, lng: -0.1278, label: "London" },
+  },
+  {
+    start: { lat: 51.5074, lng: -0.1278, label: "London" },
+    end: { lat: 25.2048, lng: 55.2708, label: "Dubai" },
+  },
+  {
+    start: { lat: 25.2048, lng: 55.2708, label: "Dubai" },
+    end: { lat: 28.6139, lng: 77.209, label: "New Delhi" },
+  },
+  {
+    start: { lat: 1.3521, lng: 103.8198, label: "Singapore" },
+    end: { lat: -33.8688, lng: 151.2093, label: "Sydney" },
   },
 ]
 
@@ -112,7 +135,18 @@ export default function ContactPage() {
                           </div>
                           <div>
                             <p className="text-xs uppercase tracking-[0.2em] text-zyra-text-secondary">{item.label}</p>
-                            <p className="mt-1 text-zyra-text-primary">{item.value}</p>
+                            {item.label === "Call" ? (
+                              <div className="mt-1 h-8 overflow-visible">
+                                <TextDisperse
+                                  aria-label={item.value}
+                                  className="w-fit justify-start gap-[0.01em] text-[1.05rem] font-medium leading-none text-zyra-text-primary"
+                                >
+                                  555-014-2098
+                                </TextDisperse>
+                              </div>
+                            ) : (
+                              <p className="mt-1 text-zyra-text-primary">{item.value}</p>
+                            )}
                           </div>
                         </div>
                       )
@@ -120,78 +154,112 @@ export default function ContactPage() {
                   </div>
                 </div>
 
-                <div className="rounded-[2rem] border border-zyra-border-subtle bg-zyra-bg-card p-8 sm:p-10">
-                  <form className="space-y-5" onSubmit={handleSubmit(onSubmit)} noValidate>
-                    <div className="grid gap-5 sm:grid-cols-2">
-                      <Field label="Name" error={errors.name?.message}>
-                        <input
-                          {...register("name")}
-                          aria-invalid={Boolean(errors.name)}
-                          className="h-12 w-full rounded-xl border border-zyra-border-default bg-zyra-bg-primary px-4 text-zyra-text-primary outline-none transition-colors focus:border-zyra-accent-neon"
-                          placeholder="Your name"
+                <div className="flex min-h-[420px] flex-col rounded-[2rem] border border-zyra-border-subtle bg-zyra-bg-card p-8 sm:p-10">
+                  <form className="flex h-full flex-col" onSubmit={handleSubmit(onSubmit)} noValidate>
+                    <div className="space-y-5">
+                      <div className="grid gap-5 sm:grid-cols-2">
+                        <Field label="Name" error={errors.name?.message}>
+                          <input
+                            {...register("name")}
+                            aria-invalid={Boolean(errors.name)}
+                            className="h-12 w-full rounded-xl border border-zyra-border-default bg-zyra-bg-primary px-4 text-zyra-text-primary outline-none transition-colors focus:border-zyra-accent-neon"
+                            placeholder="Your name"
+                          />
+                        </Field>
+                        <Field label="Email" error={errors.email?.message}>
+                          <input
+                            {...register("email")}
+                            type="email"
+                            aria-invalid={Boolean(errors.email)}
+                            className="h-12 w-full rounded-xl border border-zyra-border-default bg-zyra-bg-primary px-4 text-zyra-text-primary outline-none transition-colors focus:border-zyra-accent-neon"
+                            placeholder="you@company.com"
+                          />
+                        </Field>
+                      </div>
+
+                      <div className="grid gap-5 sm:grid-cols-2">
+                        <Field label="Company" error={errors.company?.message}>
+                          <input
+                            {...register("company")}
+                            aria-invalid={Boolean(errors.company)}
+                            className="h-12 w-full rounded-xl border border-zyra-border-default bg-zyra-bg-primary px-4 text-zyra-text-primary outline-none transition-colors focus:border-zyra-accent-neon"
+                            placeholder="Company or team"
+                          />
+                        </Field>
+                        <Field label="Budget or stage" error={errors.budget?.message}>
+                          <input
+                            {...register("budget")}
+                            aria-invalid={Boolean(errors.budget)}
+                            className="h-12 w-full rounded-xl border border-zyra-border-default bg-zyra-bg-primary px-4 text-zyra-text-primary outline-none transition-colors focus:border-zyra-accent-neon"
+                            placeholder="Range, phase, or timeline"
+                          />
+                        </Field>
+                      </div>
+
+                      <Field label="Project details" error={errors.message?.message}>
+                        <textarea
+                          {...register("message")}
+                          rows={6}
+                          aria-invalid={Boolean(errors.message)}
+                          className="w-full rounded-xl border border-zyra-border-default bg-zyra-bg-primary px-4 py-3 text-zyra-text-primary outline-none transition-colors focus:border-zyra-accent-neon"
+                          placeholder="What are you building, what is blocked, and what outcome matters most?"
                         />
                       </Field>
-                      <Field label="Email" error={errors.email?.message}>
-                        <input
-                          {...register("email")}
-                          type="email"
-                          aria-invalid={Boolean(errors.email)}
-                          className="h-12 w-full rounded-xl border border-zyra-border-default bg-zyra-bg-primary px-4 text-zyra-text-primary outline-none transition-colors focus:border-zyra-accent-neon"
-                          placeholder="you@company.com"
-                        />
-                      </Field>
+
+                      <button
+                        type="submit"
+                        disabled={isSubmitting}
+                        className="inline-flex h-12 items-center justify-center rounded-full bg-zyra-accent-neon px-6 font-medium text-black transition-opacity hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-60"
+                      >
+                        {isSubmitting ? "Sending..." : "Send inquiry"}
+                      </button>
+
+                      {submitMessage && (
+                        <p className="rounded-xl border border-zyra-accent-neon/30 bg-zyra-accent-glow px-4 py-3 text-sm text-zyra-text-primary">
+                          {submitMessage}
+                        </p>
+                      )}
+
+                      {submitError && (
+                        <p className="rounded-xl border border-red-500/30 bg-red-500/10 px-4 py-3 text-sm text-red-300">
+                          {submitError}
+                        </p>
+                      )}
                     </div>
 
-                    <div className="grid gap-5 sm:grid-cols-2">
-                      <Field label="Company" error={errors.company?.message}>
-                        <input
-                          {...register("company")}
-                          aria-invalid={Boolean(errors.company)}
-                          className="h-12 w-full rounded-xl border border-zyra-border-default bg-zyra-bg-primary px-4 text-zyra-text-primary outline-none transition-colors focus:border-zyra-accent-neon"
-                          placeholder="Company or team"
-                        />
-                      </Field>
-                      <Field label="Budget or stage" error={errors.budget?.message}>
-                        <input
-                          {...register("budget")}
-                          aria-invalid={Boolean(errors.budget)}
-                          className="h-12 w-full rounded-xl border border-zyra-border-default bg-zyra-bg-primary px-4 text-zyra-text-primary outline-none transition-colors focus:border-zyra-accent-neon"
-                          placeholder="Range, phase, or timeline"
-                        />
-                      </Field>
+                    <div className="flex flex-1 items-center justify-center pt-8">
+                      <LocationTag city="San Francisco" country="USA" timezone="PST" />
                     </div>
-
-                    <Field label="Project details" error={errors.message?.message}>
-                      <textarea
-                        {...register("message")}
-                        rows={6}
-                        aria-invalid={Boolean(errors.message)}
-                        className="w-full rounded-xl border border-zyra-border-default bg-zyra-bg-primary px-4 py-3 text-zyra-text-primary outline-none transition-colors focus:border-zyra-accent-neon"
-                        placeholder="What are you building, what is blocked, and what outcome matters most?"
-                      />
-                    </Field>
-
-                    <button
-                      type="submit"
-                      disabled={isSubmitting}
-                      className="inline-flex h-12 items-center justify-center rounded-full bg-zyra-accent-neon px-6 font-medium text-black transition-opacity hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-60"
-                    >
-                      {isSubmitting ? "Sending..." : "Send inquiry"}
-                    </button>
-
-                    {submitMessage && (
-                      <p className="rounded-xl border border-zyra-accent-neon/30 bg-zyra-accent-glow px-4 py-3 text-sm text-zyra-text-primary">
-                        {submitMessage}
-                      </p>
-                    )}
-
-                    {submitError && (
-                      <p className="rounded-xl border border-red-500/30 bg-red-500/10 px-4 py-3 text-sm text-red-300">
-                        {submitError}
-                      </p>
-                    )}
                   </form>
                 </div>
+              </div>
+
+              <div className="mt-16">
+                <div className="mb-8 max-w-3xl">
+                  <SectionLabel className="mb-4">Scheduling</SectionLabel>
+                  <h2 className="font-heading text-3xl font-bold tracking-tight text-zyra-text-primary sm:text-4xl">
+                    Book Time When a Short Working Session Is Faster
+                  </h2>
+                  <p className="mt-4 text-lg leading-relaxed text-zyra-text-secondary">
+                    If you already know the problem but need sharper direction, use a focused intro call to align on priorities, technical scope, and the right next step.
+                  </p>
+                </div>
+
+                <Calendar />
+              </div>
+
+              <div className="mt-16">
+                <div className="mb-8 max-w-3xl">
+                  <SectionLabel className="mb-4">Global Delivery</SectionLabel>
+                  <h2 className="font-heading text-3xl font-bold tracking-tight text-zyra-text-primary sm:text-4xl">
+                    Remote Collaboration Across Product Hubs
+                  </h2>
+                  <p className="mt-4 text-lg leading-relaxed text-zyra-text-secondary">
+                    Zyra works with teams across North America, Europe, the Middle East, Asia, and Oceania with a delivery model designed for async clarity.
+                  </p>
+                </div>
+
+                <WorldMap dots={CONTACT_ROUTES} lineColor="#39ff87" className="shadow-[0_24px_80px_rgba(0,0,0,0.28)]" />
               </div>
             </section>
           </main>

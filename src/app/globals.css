@@ -181,4 +181,8 @@
   .text-balance {
     text-wrap: balance;
   }
+
+  .shadow-orbital {
+    box-shadow: 0 0 24px rgba(57, 255, 135, 0.12);
+  }
 }

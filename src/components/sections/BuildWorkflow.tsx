@@ -1,11 +1,10 @@
 "use client"
 
 import * as React from "react"
-import { motion, AnimatePresence } from "framer-motion"
+import { motion } from "framer-motion"
 import { Lightbulb, Layers, Code, ShieldCheck, Rocket } from "lucide-react"
 import { SectionLabel } from "@/components/ui/SectionLabel"
-import { useScrollProgress } from "@/hooks/useScrollProgress"
-import { cn } from "@/lib/utils"
+import { Timeline } from "@/components/ui/timeline"
 
 const STEPS = [
   {
@@ -45,194 +44,32 @@ const STEPS = [
   },
 ]
 
-const scaleFade = {
-  initial: { opacity: 0, scale: 0.92 },
-  animate: { opacity: 1, scale: 1 },
-  exit: { opacity: 0, scale: 1.05 },
-  transition: { duration: 0.4 },
-}
-
-// Left visual components for each step
-function StepVisual({ step }: { step: number }) {
-  return (
-    <AnimatePresence mode="wait">
-      <motion.div
-        key={step}
-        variants={scaleFade}
-        initial="initial"
-        animate="animate"
-        exit="exit"
-        className={cn(
-          "absolute inset-0 flex items-center justify-center p-8",
-          step === 4 ? "lg:items-end lg:pb-20" : "lg:items-start lg:pt-20"
-        )}
-      >
-        <div className="relative flex aspect-square w-full max-w-md items-center justify-center rounded-3xl border border-zyra-border-subtle bg-zyra-bg-secondary p-8 shadow-2xl overflow-hidden">
-          {/* Radial gradient background based on step */}
-          <div
-            className="absolute inset-0 opacity-20"
-            style={{
-              background: `radial-gradient(circle at center, var(--color-zyra-accent-neon) 0%, transparent 70%)`,
-              filter: `hue-rotate(${step * 15}deg)`,
-              transition: "filter 0.5s ease",
-            }}
-          />
-
-          {/* Actual visuals per step */}
-          {step === 0 && (
-             <div className="relative flex items-center justify-center">
-               <motion.div
-                 animate={{ scale: [1, 1.2, 1], opacity: [0.5, 1, 0.5] }}
-                 transition={{ repeat: Infinity, duration: 3, ease: "easeInOut" }}
-                 className="absolute h-32 w-32 rounded-full border border-zyra-accent-neon/30 bg-zyra-accent-glow"
-               />
-               <motion.div
-                 animate={{ scale: [1, 1.1, 1], rotate: [0, 90, 180, 360] }}
-                 transition={{ repeat: Infinity, duration: 8, ease: "linear" }}
-                 className="absolute h-48 w-48 rounded-full border border-dashed border-zyra-accent-neon/20"
-               />
-               <Lightbulb className="z-10 h-16 w-16 text-zyra-accent-neon" />
-             </div>
-          )}
-          {step === 1 && (
-            <div className="relative grid w-full grid-cols-2 gap-4">
-              <motion.div
-                initial={{ height: 0 }}
-                animate={{ height: "100%" }}
-                transition={{ duration: 0.8 }}
-                className="col-span-2 h-12 w-full rounded-md border border-zyra-accent-neon/20 bg-zyra-bg-elevated"
-              />
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 0.4, duration: 0.8 }}
-                className="h-24 w-full rounded-md border border-zyra-accent-neon/20 bg-zyra-bg-elevated"
-              />
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 0.8, duration: 0.8 }}
-                className="h-24 w-full rounded-md border border-zyra-accent-neon/20 bg-zyra-bg-elevated"
-              />
-            </div>
-          )}
-          {step === 2 && (
-            <div className="relative flex items-center justify-center">
-               <motion.svg className="absolute inset-0 h-full w-full" viewBox="0 0 100 100">
-                  <motion.path
-                    d="M 20 50 L 50 20 L 80 50 L 50 80 Z"
-                    fill="none"
-                    stroke="var(--color-zyra-accent-neon)"
-                    strokeWidth="1"
-                    strokeDasharray="1 4"
-                    animate={{ strokeDashoffset: [0, 20] }}
-                    transition={{ repeat: Infinity, duration: 2, ease: "linear" }}
-                  />
-               </motion.svg>
-               <Code className="z-10 h-16 w-16 text-zyra-accent-neon" />
-            </div>
-          )}
-          {step === 3 && (
-            <div className="relative flex items-center justify-center">
-              <motion.div
-                initial={{ top: 0, opacity: 0 }}
-                animate={{ top: ["0%", "100%", "0%"], opacity: [0, 1, 0] }}
-                transition={{ repeat: Infinity, duration: 3, ease: "easeInOut" }}
-                className="absolute left-0 right-0 h-1 bg-zyra-accent-neon/50 shadow-[0_0_10px_var(--color-zyra-accent-neon)]"
-              />
-              <ShieldCheck className="z-10 h-20 w-20 text-zyra-accent-neon" />
-            </div>
-          )}
-          {step === 4 && (
-            <div className="relative flex items-center justify-center">
-              <motion.div
-                animate={{ y: [0, -20, 0] }}
-                transition={{ repeat: Infinity, duration: 2, ease: "easeInOut" }}
-              >
-                <Rocket className="z-10 h-20 w-20 text-zyra-accent-neon" />
-              </motion.div>
-              <motion.div
-                animate={{ height: ["0%", "100%"], opacity: [1, 0] }}
-                transition={{ repeat: Infinity, duration: 1, ease: "easeOut" }}
-                className="absolute bottom-0 h-20 w-1 bg-gradient-to-b from-zyra-accent-neon to-transparent"
-              />
-            </div>
-          )}
-        </div>
-      </motion.div>
-    </AnimatePresence>
-  )
-}
-
-function StepCard({
-  step,
-  index,
-  isActive,
-  setActiveStep,
-}: {
-  step: (typeof STEPS)[0]
-  index: number
-  isActive: boolean
-  setActiveStep: (i: number) => void
-}) {
-  const ref = React.useRef<HTMLDivElement>(null)
-  
-  // Custom hook to update active step when this card is in view
-  useScrollProgress(ref, index, setActiveStep)
-
-  const Icon = step.icon
-
-  return (
-    <div
-      ref={ref}
-      className={cn(
-        "relative flex min-h-[50vh] flex-col py-20 transition-all duration-700",
-        isActive ? "opacity-100 scale-100" : "opacity-40 scale-95"
-      )}
-    >
-      <div
-        className={cn(
-          "absolute left-0 top-1/2 h-1/2 w-[2px] -translate-y-1/2 rounded-full transition-colors duration-500 hidden lg:block",
-          isActive ? "bg-zyra-accent-neon shadow-[0_0_10px_var(--color-zyra-accent-neon)]" : "bg-zyra-border-subtle"
-        )}
-      />
-      
-      <div className="lg:pl-16">
-        <div className="mb-4 flex items-center gap-4">
-          <span className="font-heading text-6xl font-black text-zyra-text-primary/20 tracking-tighter select-none">
-            {step.number}
-          </span>
-          <div
-            className={cn(
-              "flex h-12 w-12 items-center justify-center rounded-lg border transition-colors duration-500",
-              isActive
-                ? "border-zyra-accent-neon bg-zyra-accent-glow"
-                : "border-zyra-border-subtle bg-transparent"
-            )}
-          >
-            <Icon
-              className={cn(
-                "h-6 w-6 transition-colors duration-500",
-                isActive ? "text-zyra-accent-neon" : "text-zyra-text-secondary"
-              )}
-            />
-          </div>
-        </div>
-        
-        <h3 className="mb-4 font-heading text-3xl font-bold text-zyra-text-primary md:text-4xl">
-          {step.title}
-        </h3>
-        
-        <p className="max-w-xl text-lg text-zyra-text-secondary leading-relaxed">
-          {step.description}
-        </p>
-      </div>
-    </div>
-  )
-}
-
 export function BuildWorkflow() {
-  const [activeStep, setActiveStep] = React.useState(0)
+  const timelineData = React.useMemo(
+    () =>
+      STEPS.map((step) => {
+        const Icon = step.icon
+
+        return {
+          title: step.number,
+          content: (
+            <div className="rounded-[1.75rem] border border-zyra-border-subtle bg-[linear-gradient(180deg,rgba(20,20,20,0.96)_0%,rgba(11,11,11,1)_100%)] p-6 shadow-[0_20px_60px_rgba(0,0,0,0.2)] sm:p-8">
+              <div className="mb-5 flex items-center gap-4">
+                <div className="flex h-12 w-12 items-center justify-center rounded-xl border border-zyra-accent-neon/20 bg-zyra-accent-glow">
+                  <Icon className="h-6 w-6 text-zyra-accent-neon" />
+                </div>
+                <div>
+                  <p className="text-xs uppercase tracking-[0.24em] text-zyra-accent-neon">Step {step.number}</p>
+                  <h3 className="mt-2 font-heading text-2xl font-semibold text-zyra-text-primary sm:text-3xl">{step.title}</h3>
+                </div>
+              </div>
+              <p className="max-w-2xl text-base leading-relaxed text-zyra-text-secondary sm:text-lg">{step.description}</p>
+            </div>
+          ),
+        }
+      }),
+    []
+  )
 
   return (
     <section id="process" className="bg-zyra-bg-primary py-32">
@@ -265,29 +102,17 @@ export function BuildWorkflow() {
           </motion.p>
         </div>
 
-        <div className="relative flex flex-col lg:flex-row lg:items-start">
-          {/* Mobile Visual Panel (not sticky, shown above steps) */}
-          <div className="relative mb-12 flex h-[50vh] min-h-[400px] w-full items-center justify-center lg:hidden">
-             <StepVisual step={activeStep} />
+        <div className="mt-20 rounded-[2rem] border border-zyra-border-subtle bg-zyra-bg-card/40 py-4 backdrop-blur-sm">
+          <div className="mx-auto max-w-4xl px-4 pt-10 text-center sm:px-8">
+            <SectionLabel className="mb-4">Milestones</SectionLabel>
+            <h3 className="font-heading text-3xl font-bold tracking-tight text-zyra-text-primary sm:text-4xl">
+              A More Detailed View of the Delivery Sequence
+            </h3>
+            <p className="mt-4 text-base leading-relaxed text-zyra-text-secondary sm:text-lg">
+              The same workflow, broken into clear milestones so strategy, design, engineering, and launch decisions stay visible throughout delivery.
+            </p>
           </div>
-
-          {/* Desktop Sticky Visual Panel */}
-          <div className="hidden lg:sticky lg:top-0 lg:block lg:h-screen lg:w-1/2">
-            <StepVisual step={activeStep} />
-          </div>
-
-          {/* Scrolling Steps Container */}
-          <div className="relative w-full lg:w-1/2">
-            {STEPS.map((step, index) => (
-              <StepCard
-                key={step.number}
-                step={step}
-                index={index}
-                isActive={activeStep === index}
-                setActiveStep={setActiveStep}
-              />
-            ))}
-          </div>
+          <Timeline data={timelineData} />
         </div>
       </div>
     </section>

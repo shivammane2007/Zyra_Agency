@@ -3,6 +3,7 @@
 import Link from "next/link"
 import { motion } from "framer-motion"
 import { ArrowUpRight } from "lucide-react"
+import { PinContainer } from "@/components/ui/3d-pin"
 import { SectionLabel } from "@/components/ui/SectionLabel"
 
 const PROJECTS = [
@@ -75,37 +76,40 @@ export function Projects() {
 
         <div className="mt-16 grid gap-6 xl:grid-cols-3">
           {PROJECTS.map((project, index) => (
-            <motion.article
+            <motion.div
               key={project.title}
               initial="hidden"
               whileInView="visible"
               viewport={{ once: true }}
               variants={fadeUp}
               transition={{ delay: index * 0.08 }}
-              className="group overflow-hidden rounded-3xl border border-zyra-border-subtle bg-zyra-bg-card"
             >
-              <div className="h-56 bg-[radial-gradient(circle_at_top_left,rgba(57,255,135,0.18),transparent_45%),linear-gradient(160deg,#1a1a1a_0%,#090909_100%)] p-8">
-                <p className="text-xs uppercase tracking-[0.26em] text-zyra-accent-neon">
-                  {project.category}
-                </p>
-                <h3 className="mt-4 font-heading text-3xl font-semibold text-zyra-text-primary">
-                  {project.title}
-                </h3>
-              </div>
-              <div className="p-8">
-                <p className="leading-relaxed text-zyra-text-secondary">
-                  {project.summary}
-                </p>
-                <ul className="mt-6 space-y-3 text-sm text-zyra-text-secondary">
-                  {project.metrics.map((metric) => (
-                    <li key={metric} className="flex items-center gap-3">
-                      <span className="h-2 w-2 rounded-full bg-zyra-accent-neon" />
-                      <span>{metric}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </motion.article>
+              <PinContainer title={project.category} className="h-full" containerClassName="h-full">
+                <article className="group overflow-hidden rounded-3xl border border-zyra-border-subtle bg-zyra-bg-card">
+                  <div className="h-56 bg-[radial-gradient(circle_at_top_left,rgba(57,255,135,0.18),transparent_45%),linear-gradient(160deg,#1a1a1a_0%,#090909_100%)] p-8">
+                    <p className="text-xs uppercase tracking-[0.26em] text-zyra-accent-neon">
+                      {project.category}
+                    </p>
+                    <h3 className="mt-4 font-heading text-3xl font-semibold text-zyra-text-primary">
+                      {project.title}
+                    </h3>
+                  </div>
+                  <div className="p-8">
+                    <p className="leading-relaxed text-zyra-text-secondary">
+                      {project.summary}
+                    </p>
+                    <ul className="mt-6 space-y-3 text-sm text-zyra-text-secondary">
+                      {project.metrics.map((metric) => (
+                        <li key={metric} className="flex items-center gap-3">
+                          <span className="h-2 w-2 rounded-full bg-zyra-accent-neon" />
+                          <span>{metric}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </article>
+              </PinContainer>
+            </motion.div>
           ))}
         </div>
       </div>

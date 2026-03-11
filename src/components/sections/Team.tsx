@@ -3,6 +3,7 @@
 import Link from "next/link"
 import { motion } from "framer-motion"
 import { ArrowUpRight } from "lucide-react"
+import { PinContainer } from "@/components/ui/3d-pin"
 import { SectionLabel } from "@/components/ui/SectionLabel"
 
 const TEAM = [
@@ -78,26 +79,29 @@ export function Team() {
 
         <div className="mt-16 grid gap-6 md:grid-cols-2 xl:grid-cols-4">
           {TEAM.map((member, index) => (
-            <motion.article
+            <motion.div
               key={member.name}
               initial="hidden"
               whileInView="visible"
               viewport={{ once: true }}
               variants={fadeUp}
               transition={{ delay: index * 0.06 }}
-              className="rounded-3xl border border-zyra-border-subtle bg-zyra-bg-card p-8"
             >
-              <div className="mb-8 h-40 rounded-2xl bg-[radial-gradient(circle_at_top,rgba(57,255,135,0.18),transparent_50%),linear-gradient(160deg,#171717_0%,#0b0b0b_100%)]" />
-              <p className="text-xs uppercase tracking-[0.24em] text-zyra-accent-neon">
-                {member.role}
-              </p>
-              <h3 className="mt-4 font-heading text-2xl font-semibold text-zyra-text-primary">
-                {member.name}
-              </h3>
-              <p className="mt-4 leading-relaxed text-zyra-text-secondary">
-                {member.description}
-              </p>
-            </motion.article>
+              <PinContainer title={member.role} className="h-full" containerClassName="h-full">
+                <article className="rounded-3xl border border-zyra-border-subtle bg-zyra-bg-card p-8">
+                  <div className="mb-8 h-40 rounded-2xl bg-[radial-gradient(circle_at_top,rgba(57,255,135,0.18),transparent_50%),linear-gradient(160deg,#171717_0%,#0b0b0b_100%)]" />
+                  <p className="text-xs uppercase tracking-[0.24em] text-zyra-accent-neon">
+                    {member.role}
+                  </p>
+                  <h3 className="mt-4 font-heading text-2xl font-semibold text-zyra-text-primary">
+                    {member.name}
+                  </h3>
+                  <p className="mt-4 leading-relaxed text-zyra-text-secondary">
+                    {member.description}
+                  </p>
+                </article>
+              </PinContainer>
+            </motion.div>
           ))}
         </div>
       </div>

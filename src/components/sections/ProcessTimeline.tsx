@@ -1,41 +1,59 @@
 "use client"
 
+import * as React from "react"
 import { motion } from "framer-motion"
 import { FileSearch, Figma, Hammer, Radar } from "lucide-react"
 import { SectionLabel } from "@/components/ui/SectionLabel"
+import RadialOrbitalTimeline, { type TimelineItem } from "@/components/ui/radial-orbital-timeline"
 
 const PHASES = [
   {
+    id: 1,
     icon: FileSearch,
     phase: "Week 01",
     title: "Discovery Sprint",
     description:
       "We align on business goals, user journeys, and technical constraints to define what should be built first.",
     deliverables: ["Product brief", "Scope map", "Technical recommendation"],
+    status: "completed" as const,
+    energy: 100,
+    relatedIds: [2],
   },
   {
+    id: 2,
     icon: Figma,
     phase: "Week 02-03",
     title: "Design Direction",
     description:
       "Wireframes and polished interface systems convert product assumptions into validated screens and flows.",
     deliverables: ["UX flows", "Design system", "High-fidelity screens"],
+    status: "completed" as const,
+    energy: 82,
+    relatedIds: [1, 3],
   },
   {
+    id: 3,
     icon: Hammer,
     phase: "Week 04-08",
     title: "Build Cycle",
     description:
       "Engineering proceeds in scoped milestones with reviews, demos, and continuous QA across the stack.",
     deliverables: ["Core product build", "Integrations", "Staging deployment"],
+    status: "in-progress" as const,
+    energy: 68,
+    relatedIds: [2, 4],
   },
   {
+    id: 4,
     icon: Radar,
     phase: "Week 09+",
     title: "Launch and Iterate",
     description:
       "After release, we track user behavior, measure product health, and prioritize the next wave of improvements.",
     deliverables: ["Production rollout", "Monitoring", "Growth backlog"],
+    status: "pending" as const,
+    energy: 34,
+    relatedIds: [3],
   },
 ]
 
@@ -49,6 +67,23 @@ const fadeUp = {
 }
 
 export function ProcessTimeline() {
+  const timelineData = React.useMemo<TimelineItem[]>(
+    () =>
+      PHASES.map((phase) => ({
+        id: phase.id,
+        title: phase.title,
+        date: phase.phase,
+        content: phase.description,
+        category: "Delivery timeline",
+        icon: phase.icon,
+        relatedIds: phase.relatedIds,
+        status: phase.status,
+        energy: phase.energy,
+        highlights: phase.deliverables,
+      })),
+    []
+  )
+
   return (
     <section id="timeline" className="py-32">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -74,57 +109,15 @@ export function ProcessTimeline() {
           </motion.p>
         </div>
 
-        <div className="relative mt-16 flex flex-col gap-0">
-          {/* Vertical timeline line */}
-          <div className="absolute left-8 top-8 bottom-8 hidden w-px bg-gradient-to-b from-zyra-accent-neon/60 via-zyra-accent-neon/20 to-transparent lg:block" />
-
-          {PHASES.map((phase, index) => {
-            const Icon = phase.icon
-
-            return (
-              <motion.article
-                key={phase.title}
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true }}
-                variants={fadeUp}
-                transition={{ delay: index * 0.06 }}
-                className="flex flex-col items-start gap-8 py-10 lg:flex-row lg:items-start lg:gap-16 lg:py-12"
-              >
-                {/* Left: icon visual box */}
-                <div className="flex-shrink-0">
-                  <div className="relative overflow-hidden rounded-3xl border border-zyra-border-subtle bg-zyra-bg-card p-8">
-                    <div className="absolute inset-x-8 top-0 h-px bg-gradient-to-r from-transparent via-zyra-accent-neon to-transparent" />
-                    <div className="flex h-16 w-16 items-center justify-center rounded-lg border border-zyra-accent-neon/20 bg-zyra-accent-glow">
-                      <Icon className="h-8 w-8 text-zyra-accent-neon" />
-                    </div>
-                    <p className="mt-4 text-xs uppercase tracking-[0.24em] text-zyra-accent-neon">
-                      {phase.phase}
-                    </p>
-                  </div>
-                </div>
-
-                {/* Right: step content */}
-                <div className="flex flex-col">
-                  <h3 className="font-heading text-2xl font-semibold text-zyra-text-primary">
-                    {phase.title}
-                  </h3>
-                  <p className="mt-4 max-w-xl text-zyra-text-secondary leading-relaxed">
-                    {phase.description}
-                  </p>
-                  <ul className="mt-6 flex flex-wrap gap-x-8 gap-y-3 text-sm text-zyra-text-secondary">
-                    {phase.deliverables.map((item) => (
-                      <li key={item} className="flex items-center gap-3">
-                        <span className="h-2 w-2 rounded-full bg-zyra-accent-neon" />
-                        <span>{item}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              </motion.article>
-            )
-          })}
-        </div>
+        <motion.div
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.15 }}
+          variants={fadeUp}
+          className="mt-16"
+        >
+          <RadialOrbitalTimeline timelineData={timelineData} />
+        </motion.div>
       </div>
     </section>
   )

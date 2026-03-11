@@ -3,6 +3,7 @@
 import * as React from "react"
 import { motion } from "framer-motion"
 import { Globe, Cpu, Smartphone, LayoutDashboard, Workflow, Wrench } from "lucide-react"
+import { PinContainer } from "@/components/ui/3d-pin"
 import { SectionLabel } from "@/components/ui/SectionLabel"
 
 const SERVICES = [
@@ -98,17 +99,19 @@ export function WhatWeBuild() {
             const Icon = service.icon
             return (
               <motion.div key={service.title} variants={fadeUpVariants}>
-                <GradientHoverCard>
-                  <div className="mb-6 flex h-12 w-12 items-center justify-center rounded-lg bg-zyra-bg-elevated border border-zyra-border-subtle group-hover:border-zyra-accent-neon/30 group-hover:bg-zyra-accent-glow transition-colors duration-300">
-                    <Icon className="h-6 w-6 text-zyra-text-primary group-hover:text-zyra-accent-neon transition-colors duration-300" />
-                  </div>
-                  <h3 className="mb-3 font-heading text-xl font-semibold text-zyra-text-primary">
-                    {service.title}
-                  </h3>
-                  <p className="text-zyra-text-secondary leading-relaxed">
-                    {service.description}
-                  </p>
-                </GradientHoverCard>
+                <PinContainer title={service.title} className="h-full" containerClassName="h-full">
+                  <GradientHoverCard>
+                    <div className="mb-6 flex h-12 w-12 items-center justify-center rounded-lg bg-zyra-bg-elevated border border-zyra-border-subtle group-hover:border-zyra-accent-neon/30 group-hover:bg-zyra-accent-glow transition-colors duration-300">
+                      <Icon className="h-6 w-6 text-zyra-text-primary group-hover:text-zyra-accent-neon transition-colors duration-300" />
+                    </div>
+                    <h3 className="mb-3 font-heading text-xl font-semibold text-zyra-text-primary">
+                      {service.title}
+                    </h3>
+                    <p className="text-zyra-text-secondary leading-relaxed">
+                      {service.description}
+                    </p>
+                  </GradientHoverCard>
+                </PinContainer>
               </motion.div>
             )
           })}
