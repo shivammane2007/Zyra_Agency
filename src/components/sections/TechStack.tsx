@@ -1,14 +1,75 @@
 "use client"
 
 import { motion } from "framer-motion"
-import { PinContainer } from "@/components/ui/3d-pin"
+import { BookOpen, Bot, Boxes, Cloud, Github, Server } from "lucide-react"
+import { IdentityCardBody, RevealCardContainer, type SocialItem } from "@/components/ui/animated-profile-card"
 import { SectionLabel } from "@/components/ui/SectionLabel"
 
 const STACK = [
-  { label: "Frontend", items: ["Next.js", "React", "TypeScript", "Tailwind CSS"] },
-  { label: "Backend", items: ["Node.js", "Python", "PostgreSQL", "REST and RPC APIs"] },
-  { label: "AI", items: ["RAG pipelines", "Agent workflows", "Prompt systems", "Evaluation loops"] },
-  { label: "Ops", items: ["Vercel", "Docker", "CI/CD", "Observability"] },
+  {
+    label: "Frontend Systems",
+    place: "Client product surfaces",
+    about:
+      "Next.js, React, TypeScript, and Tailwind CSS used to build interfaces that stay fast, legible, and production-ready.",
+    avatarUrl: "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?q=80&w=1200&auto=format&fit=crop",
+    avatarText: "FE",
+    accent: "#b7ffc8",
+    textOnAccent: "#08130d",
+    mutedOnAccent: "#254131",
+    socials: [
+      { id: "gh-fe", url: "https://github.com/vercel/next.js", icon: <Github className="h-4.5 w-4.5" />, label: "Next.js repo" },
+      { id: "docs-fe", url: "https://nextjs.org/docs", icon: <BookOpen className="h-4.5 w-4.5" />, label: "Frontend docs" },
+      { id: "stack-fe", url: "https://react.dev/", icon: <Boxes className="h-4.5 w-4.5" />, label: "React" },
+    ] satisfies SocialItem[],
+  },
+  {
+    label: "Backend Systems",
+    place: "Services and data flows",
+    about:
+      "Node.js, Python, PostgreSQL, and RPC-oriented service layers selected for maintainability, throughput, and integration depth.",
+    avatarUrl: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?q=80&w=1200&auto=format&fit=crop",
+    avatarText: "BE",
+    accent: "#d3ffd9",
+    textOnAccent: "#08130d",
+    mutedOnAccent: "#2b4a36",
+    socials: [
+      { id: "gh-be", url: "https://github.com/nodejs/node", icon: <Github className="h-4.5 w-4.5" />, label: "Node repo" },
+      { id: "docs-be", url: "https://www.postgresql.org/docs/", icon: <BookOpen className="h-4.5 w-4.5" />, label: "PostgreSQL docs" },
+      { id: "stack-be", url: "https://www.python.org/", icon: <Server className="h-4.5 w-4.5" />, label: "Backend stack" },
+    ] satisfies SocialItem[],
+  },
+  {
+    label: "AI Systems",
+    place: "Retrieval and agent loops",
+    about:
+      "RAG pipelines, agent workflows, prompt systems, and evaluation loops designed around observability and repeatable product behavior.",
+    avatarUrl: "https://images.unsplash.com/photo-1623582854588-d60de57fa33f?q=80&w=1200&auto=format&fit=crop",
+    avatarText: "AI",
+    accent: "#c6ffd1",
+    textOnAccent: "#08130d",
+    mutedOnAccent: "#2a4835",
+    socials: [
+      { id: "gh-ai", url: "https://github.com/langchain-ai/langchain", icon: <Github className="h-4.5 w-4.5" />, label: "AI repo" },
+      { id: "docs-ai", url: "https://platform.openai.com/docs", icon: <BookOpen className="h-4.5 w-4.5" />, label: "Platform docs" },
+      { id: "stack-ai", url: "https://python.langchain.com/", icon: <Bot className="h-4.5 w-4.5" />, label: "Agent systems" },
+    ] satisfies SocialItem[],
+  },
+  {
+    label: "Ops Systems",
+    place: "Release and runtime reliability",
+    about:
+      "Vercel, Docker, CI/CD, and observability tooling used to keep deployments predictable, rollback-safe, and measurable.",
+    avatarUrl: "https://images.unsplash.com/photo-1636041293178-808a6762ab39?q=80&w=1200&auto=format&fit=crop",
+    avatarText: "OP",
+    accent: "#d9ffe3",
+    textOnAccent: "#08130d",
+    mutedOnAccent: "#324d3c",
+    socials: [
+      { id: "gh-ops", url: "https://github.com/docker", icon: <Github className="h-4.5 w-4.5" />, label: "Docker repo" },
+      { id: "docs-ops", url: "https://vercel.com/docs", icon: <BookOpen className="h-4.5 w-4.5" />, label: "Ops docs" },
+      { id: "stack-ops", url: "https://vercel.com/", icon: <Cloud className="h-4.5 w-4.5" />, label: "Deployment stack" },
+    ] satisfies SocialItem[],
+  },
 ]
 
 const fadeUp = {
@@ -35,9 +96,18 @@ export function TechStack() {
           >
             Modern Technology, Chosen Pragmatically
           </motion.h2>
+          <motion.p
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            variants={fadeUp}
+            className="mt-6 max-w-3xl text-lg leading-relaxed text-zyra-text-secondary"
+          >
+            Every layer is selected for delivery clarity. Hover each profile to reveal the applied system behind product interfaces, backend flows, AI workflows, and runtime operations.
+          </motion.p>
         </div>
 
-        <div className="mt-16 grid gap-6 lg:grid-cols-4">
+        <div className="mt-16 grid gap-6 md:grid-cols-2 xl:grid-cols-4">
           {STACK.map((group, index) => (
             <motion.div
               key={group.label}
@@ -47,23 +117,37 @@ export function TechStack() {
               variants={fadeUp}
               transition={{ delay: index * 0.06 }}
             >
-              <PinContainer title={group.label} className="h-full" containerClassName="h-full">
-                <article className="rounded-3xl border border-zyra-border-subtle bg-zyra-bg-card p-8">
-                  <p className="text-xs uppercase tracking-[0.24em] text-zyra-accent-neon">
-                    {group.label}
-                  </p>
-                  <div className="mt-6 flex flex-wrap gap-3">
-                    {group.items.map((item) => (
-                      <span
-                        key={item}
-                        className="rounded-full border border-zyra-border-default bg-zyra-bg-primary px-4 py-2 text-sm text-zyra-text-secondary"
-                      >
-                        {item}
-                      </span>
-                    ))}
-                  </div>
-                </article>
-              </PinContainer>
+              <RevealCardContainer
+                accent={group.accent}
+                textOnAccent={group.textOnAccent}
+                mutedOnAccent={group.mutedOnAccent}
+                className="h-full w-full"
+                base={
+                  <IdentityCardBody
+                    fullName={group.label}
+                    place={group.place}
+                    about={group.about}
+                    avatarUrl={group.avatarUrl}
+                    avatarText={group.avatarText}
+                    scheme="plain"
+                    displayAvatar={false}
+                    socials={group.socials}
+                  />
+                }
+                overlay={
+                  <IdentityCardBody
+                    fullName={group.label}
+                    place={group.place}
+                    about={group.about}
+                    avatarUrl={group.avatarUrl}
+                    avatarText={group.avatarText}
+                    scheme="accented"
+                    displayAvatar={true}
+                    socials={group.socials}
+                    cardCss={{ backgroundColor: "var(--accent-color)" }}
+                  />
+                }
+              />
             </motion.div>
           ))}
         </div>

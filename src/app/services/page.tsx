@@ -31,7 +31,7 @@ export default function ServicesPage() {
             </section>
             <WhatWeBuild />
             <Capabilities />
-            <ProcessTimeline />
+            <ProcessTimeline variant="services" />
             <CTA />
           </main>
           <Footer />

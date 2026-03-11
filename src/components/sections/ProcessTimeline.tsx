@@ -66,7 +66,7 @@ const fadeUp = {
   },
 }
 
-export function ProcessTimeline() {
+export function ProcessTimeline({ variant = "default" }: { variant?: "default" | "services" }) {
   const timelineData = React.useMemo<TimelineItem[]>(
     () =>
       PHASES.map((phase) => ({
@@ -116,7 +116,7 @@ export function ProcessTimeline() {
           variants={fadeUp}
           className="mt-16"
         >
-          <RadialOrbitalTimeline timelineData={timelineData} />
+          <RadialOrbitalTimeline timelineData={timelineData} variant={variant} />
         </motion.div>
       </div>
     </section>

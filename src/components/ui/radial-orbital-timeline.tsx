@@ -23,6 +23,7 @@ export interface TimelineItem {
 
 interface RadialOrbitalTimelineProps {
   timelineData: TimelineItem[]
+  variant?: "default" | "services"
 }
 
 function getStatusStyles(status: TimelineItem["status"]) {
@@ -36,7 +37,7 @@ function getStatusStyles(status: TimelineItem["status"]) {
   }
 }
 
-export default function RadialOrbitalTimeline({ timelineData }: RadialOrbitalTimelineProps) {
+export default function RadialOrbitalTimeline({ timelineData, variant = "default" }: RadialOrbitalTimelineProps) {
   const [expandedItems, setExpandedItems] = useState<Record<number, boolean>>({})
   const [rotationAngle, setRotationAngle] = useState(0)
   const [autoRotate, setAutoRotate] = useState(true)
@@ -45,6 +46,8 @@ export default function RadialOrbitalTimeline({ timelineData }: RadialOrbitalTim
   const [orbitRadius, setOrbitRadius] = useState(220)
   const containerRef = useRef<HTMLDivElement>(null)
   const nodeRefs = useRef<Record<number, HTMLDivElement | null>>({})
+  const isServicesVariant = variant === "services"
+  const orbitOffsetX = isServicesVariant ? -28 : -20
 
   const activeItem = useMemo(
     () => timelineData.find((item) => item.id === activeNodeId) ?? timelineData[0] ?? null,
@@ -56,7 +59,9 @@ export default function RadialOrbitalTimeline({ timelineData }: RadialOrbitalTim
 
     const updateRadius = () => {
       if (!containerRef.current) return
-      const nextRadius = Math.max(145, Math.min(containerRef.current.offsetWidth * 0.24, 250))
+      const widthFactor = isServicesVariant ? 0.215 : 0.25
+      const maxRadius = isServicesVariant ? 232 : 260
+      const nextRadius = Math.max(145, Math.min(containerRef.current.offsetWidth * widthFactor, maxRadius))
       setOrbitRadius(nextRadius)
     }
 
@@ -66,14 +71,15 @@ export default function RadialOrbitalTimeline({ timelineData }: RadialOrbitalTim
     observer.observe(containerRef.current)
 
     return () => observer.disconnect()
-  }, [])
+  }, [isServicesVariant])
 
   useEffect(() => {
     let rotationTimer: ReturnType<typeof setInterval> | undefined
 
     if (autoRotate) {
       rotationTimer = setInterval(() => {
-        setRotationAngle((prev) => Number(((prev + 0.28) % 360).toFixed(3)))
+        const step = isServicesVariant ? 0.18 : 0.28
+        setRotationAngle((prev) => Number(((prev + step) % 360).toFixed(3)))
       }, 50)
     }
 
@@ -82,7 +88,7 @@ export default function RadialOrbitalTimeline({ timelineData }: RadialOrbitalTim
         clearInterval(rotationTimer)
       }
     }
-  }, [autoRotate])
+  }, [autoRotate, isServicesVariant])
 
   const getRelatedItems = (itemId: number) => {
     const currentItem = timelineData.find((item) => item.id === itemId)
@@ -138,7 +144,7 @@ export default function RadialOrbitalTimeline({ timelineData }: RadialOrbitalTim
   const calculateNodePosition = (index: number, total: number) => {
     const angle = ((index / total) * 360 + rotationAngle) % 360
     const radian = (angle * Math.PI) / 180
-    const x = orbitRadius * Math.cos(radian)
+    const x = orbitOffsetX + orbitRadius * Math.cos(radian)
     const y = orbitRadius * Math.sin(radian)
     const zIndex = Math.round(100 + 50 * Math.cos(radian))
     const opacity = Math.max(0.42, Math.min(1, 0.4 + 0.6 * ((1 + Math.sin(radian)) / 2)))
@@ -200,7 +206,10 @@ export default function RadialOrbitalTimeline({ timelineData }: RadialOrbitalTim
       </div>
 
       <div
-        className="relative hidden min-h-[820px] items-center justify-center overflow-hidden rounded-[2rem] border border-zyra-border-subtle bg-[radial-gradient(circle_at_center,rgba(57,255,135,0.08),transparent_32%),linear-gradient(180deg,rgba(14,14,14,0.96)_0%,rgba(7,7,7,1)_100%)] px-6 py-16 md:flex"
+        className={cn(
+          "relative hidden items-center justify-center overflow-hidden rounded-[2rem] border border-zyra-border-subtle bg-[radial-gradient(circle_at_center,rgba(57,255,135,0.08),transparent_32%),linear-gradient(180deg,rgba(14,14,14,0.96)_0%,rgba(7,7,7,1)_100%)] px-6 py-16 md:flex",
+          isServicesVariant ? "min-h-[760px] xl:px-10" : "min-h-[820px]"
+        )}
         onClick={(event) => {
           if (event.target === event.currentTarget) {
             resetView()
@@ -208,13 +217,28 @@ export default function RadialOrbitalTimeline({ timelineData }: RadialOrbitalTim
         }}
       >
         <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(57,255,135,0.14),transparent_55%)] opacity-70" />
-        <div className="pointer-events-none absolute h-[24rem] w-[24rem] rounded-full border border-zyra-accent-neon/10 lg:h-[28rem] lg:w-[28rem]" />
-        <div className="pointer-events-none absolute h-[32rem] w-[32rem] rounded-full border border-white/5" />
+        <div
+          className={cn(
+            "pointer-events-none absolute rounded-full border border-zyra-accent-neon/10",
+            isServicesVariant ? "h-[21rem] w-[21rem] lg:h-[25rem] lg:w-[25rem]" : "h-[24rem] w-[24rem] lg:h-[28rem] lg:w-[28rem]"
+          )}
+        />
+        <div
+          className={cn(
+            "pointer-events-none absolute rounded-full border border-white/5",
+            isServicesVariant ? "h-[28rem] w-[28rem]" : "h-[32rem] w-[32rem]"
+          )}
+        />
 
-        <div className="pointer-events-none absolute flex h-20 w-20 items-center justify-center rounded-full border border-zyra-accent-neon/30 bg-[radial-gradient(circle_at_30%_30%,rgba(255,255,255,0.28),rgba(57,255,135,0.2)_35%,rgba(57,255,135,0.08)_70%,transparent_100%)] shadow-[0_0_40px_rgba(57,255,135,0.22)]">
-          <div className="absolute h-24 w-24 rounded-full border border-zyra-accent-neon/15 animate-ping" />
-          <div className="absolute h-32 w-32 rounded-full border border-white/8 animate-ping [animation-delay:600ms]" />
-          <Orbit className="h-8 w-8 text-zyra-accent-neon" />
+        <div
+          className={cn(
+            "pointer-events-none absolute flex items-center justify-center rounded-full border border-zyra-accent-neon/30 bg-[radial-gradient(circle_at_30%_30%,rgba(255,255,255,0.28),rgba(57,255,135,0.2)_35%,rgba(57,255,135,0.08)_70%,transparent_100%)] shadow-[0_0_40px_rgba(57,255,135,0.22)]",
+            isServicesVariant ? "h-16 w-16" : "h-20 w-20"
+          )}
+        >
+          <div className={cn("absolute rounded-full border border-zyra-accent-neon/15 animate-ping", isServicesVariant ? "h-20 w-20" : "h-24 w-24")} />
+          <div className={cn("absolute rounded-full border border-white/8 animate-ping [animation-delay:600ms]", isServicesVariant ? "h-28 w-28" : "h-32 w-32")} />
+          <Orbit className={cn("text-zyra-accent-neon", isServicesVariant ? "h-6 w-6" : "h-8 w-8")} />
         </div>
 
         {timelineData.map((item, index) => {
@@ -230,7 +254,7 @@ export default function RadialOrbitalTimeline({ timelineData }: RadialOrbitalTim
               ref={(element) => {
                 nodeRefs.current[item.id] = element
               }}
-              className="absolute transition-all duration-700"
+              className={cn("absolute transition-all", isServicesVariant ? "duration-500" : "duration-700")}
               style={{
                 transform: `translate(${position.x}px, ${position.y}px)`,
                 zIndex: isExpanded ? 200 : position.zIndex,
@@ -254,7 +278,8 @@ export default function RadialOrbitalTimeline({ timelineData }: RadialOrbitalTim
                 />
                 <span
                   className={cn(
-                    "relative flex h-12 w-12 items-center justify-center rounded-full border text-white transition-all duration-300",
+                    "relative flex items-center justify-center rounded-full border text-white transition-all duration-300",
+                    isServicesVariant ? "h-11 w-11" : "h-12 w-12",
                     isExpanded
                       ? "scale-125 border-zyra-accent-neon bg-zyra-accent-neon text-black shadow-[0_0_26px_rgba(57,255,135,0.34)]"
                       : isRelated
@@ -262,11 +287,12 @@ export default function RadialOrbitalTimeline({ timelineData }: RadialOrbitalTim
                         : "border-white/20 bg-black/60 text-white/85"
                   )}
                 >
-                  <Icon className="h-4 w-4" />
+                  <Icon className={cn(isServicesVariant ? "h-3.5 w-3.5" : "h-4 w-4")} />
                 </span>
                 <span
                   className={cn(
-                    "mt-3 whitespace-nowrap text-[11px] font-semibold uppercase tracking-[0.22em] transition-all duration-300",
+                    "mt-3 whitespace-nowrap font-semibold uppercase tracking-[0.22em] transition-all duration-300",
+                    isServicesVariant ? "text-[10px]" : "text-[11px]",
                     isExpanded ? "text-zyra-text-primary" : "text-zyra-text-secondary"
                   )}
                 >
@@ -277,8 +303,15 @@ export default function RadialOrbitalTimeline({ timelineData }: RadialOrbitalTim
           )
         })}
 
-        <div className="absolute bottom-5 left-1/2 w-[min(100%,28rem)] -translate-x-1/2 px-2 lg:bottom-auto lg:left-auto lg:right-6 lg:top-1/2 lg:w-80 lg:-translate-y-1/2 lg:translate-x-0 lg:px-0">
-          <Card className="overflow-hidden rounded-[1.75rem] border border-white/10 bg-black/60 backdrop-blur-xl">
+        <div
+          className={cn(
+            "absolute bottom-5 left-1/2 w-[min(100%,28rem)] -translate-x-1/2 px-2 lg:bottom-auto lg:px-0",
+            isServicesVariant
+              ? "lg:left-6 lg:top-1/2 lg:w-[22rem] lg:-translate-y-1/2 lg:translate-x-0"
+              : "lg:left-auto lg:right-0 xl:right-0 lg:top-1/2 lg:w-80 lg:-translate-y-1/2 lg:translate-x-0"
+          )}
+        >
+          <Card className={cn("overflow-hidden rounded-[1.75rem] border border-white/10 bg-black/60 backdrop-blur-xl", isServicesVariant && "bg-black/72")}>
             {activeItem ? (
               <>
                 <CardHeader className="pb-3">
@@ -294,7 +327,7 @@ export default function RadialOrbitalTimeline({ timelineData }: RadialOrbitalTim
                         </Badge>
                         <span className="text-xs font-medium uppercase tracking-[0.2em] text-zyra-text-secondary">{activeItem.date}</span>
                       </div>
-                      <CardTitle className="mt-4 text-2xl text-zyra-text-primary">{activeItem.title}</CardTitle>
+                      <CardTitle className={cn("mt-4 text-zyra-text-primary", isServicesVariant ? "text-[1.65rem]" : "text-2xl")}>{activeItem.title}</CardTitle>
                       <p className="mt-2 text-xs uppercase tracking-[0.24em] text-zyra-accent-neon">{activeItem.category}</p>
                     </div>
                     <div className="flex h-11 w-11 items-center justify-center rounded-full border border-zyra-accent-neon/20 bg-zyra-accent-glow">
@@ -302,7 +335,7 @@ export default function RadialOrbitalTimeline({ timelineData }: RadialOrbitalTim
                     </div>
                   </div>
                 </CardHeader>
-                <CardContent className="space-y-5 text-sm text-zyra-text-secondary">
+                <CardContent className={cn("space-y-5 text-sm text-zyra-text-secondary", isServicesVariant && "space-y-4")}>
                   <p className="leading-relaxed">{activeItem.content}</p>
 
                   <div className="rounded-2xl border border-white/10 bg-white/5 p-4">

@@ -3,8 +3,8 @@
 import Link from "next/link"
 import { motion } from "framer-motion"
 import { ArrowUpRight } from "lucide-react"
-import { PinContainer } from "@/components/ui/3d-pin"
 import { SectionLabel } from "@/components/ui/SectionLabel"
+import { AnimatedTestimonials, type Testimonial } from "@/components/ui/animated-testimonials"
 
 const TEAM = [
   {
@@ -12,24 +12,28 @@ const TEAM = [
     role: "Product direction",
     description:
       "Translates business goals into release priorities, product decisions, and measurable roadmap outcomes.",
+    src: "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?q=80&w=3560&auto=format&fit=crop",
   },
   {
     name: "Design Lead",
     role: "Experience systems",
     description:
       "Shapes visual identity, interfaces, and interaction models that feel premium while staying easy to use.",
+    src: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?q=80&w=3540&auto=format&fit=crop",
   },
   {
     name: "Engineering Lead",
     role: "Architecture and delivery",
     description:
       "Owns implementation quality across frontend, backend, integrations, infrastructure, and release mechanics.",
+    src: "https://images.unsplash.com/photo-1623582854588-d60de57fa33f?q=80&w=3540&auto=format&fit=crop",
   },
   {
     name: "QA and Ops",
     role: "Reliability",
     description:
       "Covers validation, launch readiness, analytics, and post-release iteration so the product keeps improving.",
+    src: "https://images.unsplash.com/photo-1636041293178-808a6762ab39?q=80&w=3464&auto=format&fit=crop",
   },
 ]
 
@@ -43,6 +47,13 @@ const fadeUp = {
 }
 
 export function Team() {
+  const testimonials: Testimonial[] = TEAM.map((member) => ({
+    quote: member.description,
+    name: member.name,
+    designation: member.role,
+    src: member.src,
+  }))
+
   return (
     <section id="team" className="py-32">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -77,33 +88,15 @@ export function Team() {
           </Link>
         </div>
 
-        <div className="mt-16 grid gap-6 md:grid-cols-2 xl:grid-cols-4">
-          {TEAM.map((member, index) => (
-            <motion.div
-              key={member.name}
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true }}
-              variants={fadeUp}
-              transition={{ delay: index * 0.06 }}
-            >
-              <PinContainer title={member.role} className="h-full" containerClassName="h-full">
-                <article className="rounded-3xl border border-zyra-border-subtle bg-zyra-bg-card p-8">
-                  <div className="mb-8 h-40 rounded-2xl bg-[radial-gradient(circle_at_top,rgba(57,255,135,0.18),transparent_50%),linear-gradient(160deg,#171717_0%,#0b0b0b_100%)]" />
-                  <p className="text-xs uppercase tracking-[0.24em] text-zyra-accent-neon">
-                    {member.role}
-                  </p>
-                  <h3 className="mt-4 font-heading text-2xl font-semibold text-zyra-text-primary">
-                    {member.name}
-                  </h3>
-                  <p className="mt-4 leading-relaxed text-zyra-text-secondary">
-                    {member.description}
-                  </p>
-                </article>
-              </PinContainer>
-            </motion.div>
-          ))}
-        </div>
+        <motion.div
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.2 }}
+          variants={fadeUp}
+          className="mt-16"
+        >
+          <AnimatedTestimonials testimonials={testimonials} autoplay />
+        </motion.div>
       </div>
     </section>
   )
