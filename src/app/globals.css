@@ -1,26 +1,184 @@
 @import "tailwindcss";
+@import "tw-animate-css";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+@plugin "tailwindcss-animate";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme {
+  --font-sans: var(--font-primary);
+  --font-heading: var(--font-heading);
+
+  /* Colors */
+  --color-border: var(--border-default);
+  --color-input: var(--border-subtle);
+  --color-ring: var(--accent-neon);
+  --color-background: var(--bg-primary);
+  --color-foreground: var(--text-primary);
+  
+  /* Primary Text */
+  --color-primary: var(--text-primary);
+  --color-primary-foreground: var(--bg-primary);
+  
+  /* Secondary Background */
+  --color-secondary: var(--bg-secondary);
+  --color-secondary-foreground: var(--text-primary);
+  
+  /* Card */
+  --color-card: var(--bg-card);
+  --color-card-foreground: var(--text-primary);
+
+  /* Destructive */
+  --color-destructive: #ef4444;
+  --color-destructive-foreground: #fafafa;
+  
+  /* Muted */
+  --color-muted: var(--bg-elevated);
+  --color-muted-foreground: var(--text-secondary);
+  
+  /* Accent */
+  --color-accent: var(--accent-neon);
+  --color-accent-foreground: var(--bg-primary);
+  
+  /* Popover */
+  --color-popover: var(--bg-elevated);
+  --color-popover-foreground: var(--text-primary);
+
+  /* Custom Zyra Design System Colors */
+  --color-zyra-bg-primary: var(--bg-primary);
+  --color-zyra-bg-secondary: var(--bg-secondary);
+  --color-zyra-bg-card: var(--bg-card);
+  --color-zyra-bg-elevated: var(--bg-elevated);
+  
+  --color-zyra-border-subtle: var(--border-subtle);
+  --color-zyra-border-default: var(--border-default);
+  
+  --color-zyra-text-primary: var(--text-primary);
+  --color-zyra-text-secondary: var(--text-secondary);
+  --color-zyra-text-tertiary: var(--text-tertiary);
+  
+  --color-zyra-accent-neon: var(--accent-neon);
+  --color-zyra-accent-glow: var(--accent-glow);
+  --color-zyra-accent-white: var(--accent-white);
+
+  /* Radii */
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --radius-2xl: calc(var(--radius) + 8px);
+  --radius-3xl: calc(var(--radius) + 12px);
+  --radius-4xl: calc(var(--radius) + 16px);
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
+@layer base {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --bg-primary: #080808;
+    --bg-secondary: #0f0f0f;
+    --bg-card: #141414;
+    --bg-elevated: #1a1a1a;
+    --border-subtle: #1f1f1f;
+    --border-default: #2a2a2a;
+    --text-primary: #f0f0f0;
+    --text-secondary: #888888;
+    --text-tertiary: #555555;
+    --accent-neon: #39ff87;
+    --accent-glow: rgba(57, 255, 135, 0.12);
+    --accent-white: #ffffff;
+    --gradient-1: linear-gradient(135deg, #1a1a1a 0%, #0d0d0d 100%);
+    --gradient-glow: radial-gradient(
+      ellipse at center,
+      rgba(57, 255, 135, 0.08) 0%,
+      transparent 70%
+    );
+
+    /* Shadcn defaults mapped */
+    --background: var(--bg-primary);
+    --foreground: var(--text-primary);
+    --card: var(--bg-card);
+    --card-foreground: var(--text-primary);
+    --popover: var(--bg-elevated);
+    --popover-foreground: var(--text-primary);
+    --primary: var(--text-primary);
+    --primary-foreground: var(--bg-primary);
+    --secondary: var(--bg-secondary);
+    --secondary-foreground: var(--text-primary);
+    --muted: var(--bg-elevated);
+    --muted-foreground: var(--text-secondary);
+    --accent: var(--accent-neon);
+    --accent-foreground: var(--bg-primary);
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+    --border: var(--border-default);
+    --input: var(--border-subtle);
+    --ring: var(--accent-neon);
+    --radius: 0.5rem;
+  }
+
+  .light {
+    --bg-primary: #f8f8f8;
+    --bg-secondary: #ffffff;
+    --bg-card: #f0f0f0;
+    --bg-elevated: #e5e5e5;
+    --border-subtle: #e0e0e0;
+    --border-default: #cccccc;
+    --text-primary: #0a0a0a;
+    --text-secondary: #444444;
+    --text-tertiary: #888888;
+    --accent-neon: #16c964;
+    --accent-glow: rgba(22, 201, 100, 0.12);
+    --accent-white: #000000;
+    --gradient-1: linear-gradient(135deg, #ffffff 0%, #f0f0f0 100%);
+    --gradient-glow: radial-gradient(
+      ellipse at center,
+      rgba(22, 201, 100, 0.08) 0%,
+      transparent 70%
+    );
+
+    /* Shadcn defaults mapped for light mode */
+    --background: var(--bg-primary);
+    --foreground: var(--text-primary);
+    --card: var(--bg-card);
+    --card-foreground: var(--text-primary);
+    --popover: var(--bg-elevated);
+    --popover-foreground: var(--text-primary);
+    --primary: var(--text-primary);
+    --primary-foreground: var(--bg-primary);
+    --secondary: var(--bg-secondary);
+    --secondary-foreground: var(--text-primary);
+    --muted: var(--bg-elevated);
+    --muted-foreground: var(--text-secondary);
+    --accent: var(--accent-neon);
+    --accent-foreground: var(--bg-primary);
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+    --border: var(--border-default);
+    --input: var(--border-subtle);
+    --ring: var(--accent-neon);
+  }
+
+  * {
+    @apply border-border outline-ring/50;
+  }
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    @apply bg-background text-foreground antialiased selection:bg-zyra-accent-neon selection:text-black;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
 }
