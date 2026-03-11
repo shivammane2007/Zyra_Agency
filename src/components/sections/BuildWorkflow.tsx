@@ -62,7 +62,10 @@ function StepVisual({ step }: { step: number }) {
         initial="initial"
         animate="animate"
         exit="exit"
-        className="absolute inset-0 flex items-center justify-center p-8"
+        className={cn(
+          "absolute inset-0 flex items-center justify-center p-8",
+          step === 4 ? "lg:items-end lg:pb-20" : "lg:items-start lg:pt-20"
+        )}
       >
         <div className="relative flex aspect-square w-full max-w-md items-center justify-center rounded-3xl border border-zyra-border-subtle bg-zyra-bg-secondary p-8 shadow-2xl overflow-hidden">
           {/* Radial gradient background based on step */}
@@ -269,7 +272,7 @@ export function BuildWorkflow() {
           </div>
 
           {/* Desktop Sticky Visual Panel */}
-          <div className="hidden lg:sticky lg:top-0 lg:flex lg:h-screen lg:w-1/2 lg:items-start lg:justify-center lg:pt-20">
+          <div className="hidden lg:sticky lg:top-0 lg:block lg:h-screen lg:w-1/2">
             <StepVisual step={activeStep} />
           </div>
 
