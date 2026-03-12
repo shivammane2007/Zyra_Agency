@@ -9,8 +9,8 @@ import { Footer } from "@/components/sections/Footer"
 import { Calendar } from "@/components/ui/calendar"
 import { LocationTag } from "@/components/ui/location-tag"
 import { WorldMap } from "@/components/ui/map"
+import { PracticalEffect } from "@/components/ui/practical_effect"
 import { SectionLabel } from "@/components/ui/SectionLabel"
-import { ShootingStars } from "@/components/ui/shooting_star"
 import { TextDisperse } from "@/components/ui/text-disperse"
 import { contactSchema, type ContactFormValues } from "@/lib/contact-schema"
 
@@ -102,12 +102,7 @@ export default function ContactPage() {
     <>
       <Navbar />
       <div className="relative isolate">
-        <div className="pointer-events-none absolute inset-y-0 left-0 -z-10 hidden w-20 overflow-hidden opacity-35 lg:block xl:w-32 2xl:w-40">
-          <ShootingStars className="[mask-image:linear-gradient(to_bottom,transparent_0,black_8rem,black_calc(100%-4rem),transparent_100%)]" />
-        </div>
-        <div className="pointer-events-none absolute inset-y-0 right-0 -z-10 hidden w-20 overflow-hidden opacity-35 lg:block xl:w-32 2xl:w-40">
-          <ShootingStars className="[mask-image:linear-gradient(to_bottom,transparent_0,black_8rem,black_calc(100%-4rem),transparent_100%)]" />
-        </div>
+        <PracticalEffect className="-z-10 opacity-40 [mask-image:linear-gradient(to_bottom,transparent_0,black_8rem,black_calc(100%-4rem),transparent_100%)]" />
         <div className="relative z-10">
           <main className="min-h-screen pt-32">
             <section id="contact" className="mx-auto max-w-7xl px-4 pb-20 sm:px-6 lg:px-8">

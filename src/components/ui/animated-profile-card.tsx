@@ -2,7 +2,6 @@
 
 import * as React from "react"
 import { forwardRef, useCallback, useRef } from "react"
-import { useTheme } from "next-themes"
 import { useGSAP } from "@gsap/react"
 import { gsap } from "gsap"
 
@@ -171,8 +170,6 @@ export const RevealCardContainer = forwardRef<HTMLDivElement, RevealCardProps>(
   ) => {
     const holderRef = useRef<HTMLDivElement>(null)
     const overlayRef = useRef<HTMLDivElement>(null)
-    const { resolvedTheme } = useTheme()
-    const overlayMode = resolvedTheme === "dark" ? "light" : "dark"
 
     const assignRef = useCallback(
       (element: HTMLDivElement | null) => {
@@ -226,7 +223,7 @@ export const RevealCardContainer = forwardRef<HTMLDivElement, RevealCardProps>(
         {...rest}
       >
         <div>{base}</div>
-        <div ref={overlayRef} className={cn("absolute inset-0 h-full w-full", overlayMode)}>
+        <div ref={overlayRef} className="absolute inset-0 h-full w-full">
           {overlay}
         </div>
       </div>

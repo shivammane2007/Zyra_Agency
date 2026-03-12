@@ -78,9 +78,9 @@ export default function RadialOrbitalTimeline({ timelineData, variant = "default
 
     if (autoRotate) {
       rotationTimer = setInterval(() => {
-        const step = isServicesVariant ? 0.18 : 0.28
-        setRotationAngle((prev) => Number(((prev + step) % 360).toFixed(3)))
-      }, 50)
+        const step = isServicesVariant ? 0.14 : 0.22
+        setRotationAngle((prev) => Number((((prev - step) + 360) % 360).toFixed(3)))
+      }, 60)
     }
 
     return () => {
