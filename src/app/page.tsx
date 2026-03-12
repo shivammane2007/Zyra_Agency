@@ -9,6 +9,7 @@ import { ProcessTimeline } from "@/components/sections/ProcessTimeline";
 import { Projects } from "@/components/sections/Projects";
 import { Results } from "@/components/sections/Results";
 import { Team } from "@/components/sections/Team";
+import { FAQSection } from "@/components/sections/FAQ";
 import { TechStack } from "@/components/sections/TechStack";
 import { WhatWeBuild } from "@/components/sections/WhatWeBuild";
 import { PracticalEffect } from "@/components/ui/practical_effect";
@@ -29,6 +30,7 @@ export default function Home() {
             <ProcessTimeline />
             <Projects />
             <Team />
+            <FAQSection />
             <Results />
             <TechStack />
             <CTA />

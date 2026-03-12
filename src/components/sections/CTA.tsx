@@ -8,7 +8,7 @@ import { SectionLabel } from "@/components/ui/SectionLabel"
 
 export function CTA() {
   return (
-    <section id="cta" className="py-32">
+    <section id="contact" className="py-32">
       <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 24 }}
@@ -27,7 +27,7 @@ export function CTA() {
               </p>
               <div className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
                 <Link
-                  href="/contact"
+                  href="/start-project"
                   className="inline-flex items-center justify-center gap-2 rounded-full bg-zyra-accent-neon px-6 py-3 font-medium text-black transition-opacity hover:opacity-90"
                 >
                   Start a project

@@ -51,7 +51,7 @@ const CONTACT_ROUTES = [
   },
 ]
 
-export default function ContactPage() {
+export default function StartProjectPage() {
   const [submitMessage, setSubmitMessage] = React.useState<string | null>(null)
   const [submitError, setSubmitError] = React.useState<string | null>(null)
 
@@ -105,10 +105,10 @@ export default function ContactPage() {
         <PracticalEffect className="-z-10 opacity-40 [mask-image:linear-gradient(to_bottom,transparent_0,black_8rem,black_calc(100%-4rem),transparent_100%)]" />
         <div className="relative z-10">
           <main className="min-h-screen pt-32">
-            <section id="contact" className="mx-auto max-w-7xl px-4 pb-20 sm:px-6 lg:px-8">
+            <section id="start-project" className="mx-auto max-w-7xl px-4 pb-20 sm:px-6 lg:px-8">
               <div className="grid gap-10 lg:grid-cols-[0.9fr_1.1fr]">
                 <div>
-                  <SectionLabel className="mb-6">Contact</SectionLabel>
+                  <SectionLabel className="mb-6">Start Project</SectionLabel>
                   <h1 className="max-w-3xl font-heading text-5xl font-bold tracking-tight text-zyra-text-primary sm:text-6xl lg:text-7xl">
                     Tell Us What You Need to Build Next
                   </h1>

@@ -106,9 +106,9 @@ export function Capabilities() {
           className="mt-16 grid gap-4 rounded-3xl border border-zyra-border-subtle bg-zyra-bg-card/50 p-6 sm:grid-cols-2 xl:grid-cols-4"
         >
           {METRICS.map((metric) => (
-            <motion.div key={metric.label} variants={fadeUp}>
+            <motion.div key={metric.label} variants={fadeUp} className="flex flex-col h-full">
               <PinContainer title={metric.label} className="h-full" containerClassName="h-full">
-                <div className="rounded-2xl border border-zyra-border-subtle bg-zyra-bg-primary/60 p-6 text-center">
+                <div className="flex h-full w-full flex-col items-center justify-center rounded-2xl border border-zyra-border-subtle bg-zyra-bg-primary/60 p-6 text-center lg:p-10">
                   <div className="font-heading text-4xl font-bold text-zyra-text-primary sm:text-5xl">
                     <AnimatedCounter value={metric.value} suffix={metric.suffix} />
                   </div>

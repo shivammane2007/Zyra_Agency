@@ -10,7 +10,7 @@ interface GlowCardProps extends HTMLMotionProps<"div"> {
   glowClassName?: string
 }
 
-export function GlowCard({
+function GlowCardComponent({
   children,
   className,
   glowClassName,
@@ -36,3 +36,5 @@ export function GlowCard({
     </motion.div>
   )
 }
+
+export const GlowCard = React.memo(GlowCardComponent)

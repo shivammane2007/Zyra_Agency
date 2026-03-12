@@ -11,7 +11,7 @@ interface AnimatedCounterProps {
   className?: string
 }
 
-export function AnimatedCounter({ 
+function AnimatedCounterComponent({ 
   value, 
   suffix = "", 
   prefix = "", 
@@ -45,3 +45,5 @@ export function AnimatedCounter({
     </span>
   )
 }
+
+export const AnimatedCounter = React.memo(AnimatedCounterComponent)

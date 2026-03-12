@@ -31,20 +31,20 @@ export function Hero() {
           pathLengthFifth,
         ]}
       >
-        <div className="flex flex-col items-center text-center px-6 -mt-24">
+        <div className="flex flex-col items-center justify-center text-center px-6 -mt-110 transform-gpu will-change-transform">
           <span className="rounded-full border border-white/10 bg-white/5 px-4 py-1 text-xs tracking-widest text-white/70 mb-6">
-            NEXT-GEN PRODUCTIVITY
+            NEXT-GEN PRODUCT DEVELOPMENT
           </span>
-          <h1 className="text-5xl md:text-7xl font-bold tracking-tight text-white leading-[1.1] max-w-4xl">
-            Build smarter tools for modern teams
+          <h1 className="hero-animated-text text-5xl md:text-7xl font-bold tracking-tight leading-[1.1] max-w-4xl">
+            DESIGN. BUILD. LAUNCH. Products That SCALE
           </h1>
           <p className="mt-6 text-lg md:text-xl text-white/60 max-w-3xl">
-            Streamline your workflow and boost productivity with intuitive
-            solutions. Security, speed, and simplicity—all in one platform.
+            <b>Designing, Engineering, and Launching Modern Products That Drive Real Impact </b>
+
           </p>
           <div className="mt-10">
             <button className="rounded-lg bg-white text-black px-6 py-3 font-medium hover:bg-white/90 transition">
-              Get Started
+             <b>Bring Your IDEA TO LIFE ➤</b>
             </button>
           </div>
         </div>

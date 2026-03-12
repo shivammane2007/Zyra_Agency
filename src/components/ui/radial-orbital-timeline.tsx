@@ -1,5 +1,4 @@
-"use client"
-
+import * as React from "react"
 import { useEffect, useMemo, useRef, useState, type ElementType } from "react"
 import { ArrowRight, Link2, Orbit, Zap } from "lucide-react"
 
@@ -37,7 +36,7 @@ function getStatusStyles(status: TimelineItem["status"]) {
   }
 }
 
-export default function RadialOrbitalTimeline({ timelineData, variant = "default" }: RadialOrbitalTimelineProps) {
+const RadialOrbitalTimeline = React.memo(({ timelineData, variant = "default" }: RadialOrbitalTimelineProps) => {
   const [expandedItems, setExpandedItems] = useState<Record<number, boolean>>({})
   const [rotationAngle, setRotationAngle] = useState(0)
   const [autoRotate, setAutoRotate] = useState(true)
@@ -73,22 +72,7 @@ export default function RadialOrbitalTimeline({ timelineData, variant = "default
     return () => observer.disconnect()
   }, [isServicesVariant])
 
-  useEffect(() => {
-    let rotationTimer: ReturnType<typeof setInterval> | undefined
-
-    if (autoRotate) {
-      rotationTimer = setInterval(() => {
-        const step = isServicesVariant ? 0.14 : 0.22
-        setRotationAngle((prev) => Number((((prev - step) + 360) % 360).toFixed(3)))
-      }, 60)
-    }
-
-    return () => {
-      if (rotationTimer) {
-        clearInterval(rotationTimer)
-      }
-    }
-  }, [autoRotate, isServicesVariant])
+  // JS-based rotation removed in favor of CSS animation for performance
 
   const getRelatedItems = (itemId: number) => {
     const currentItem = timelineData.find((item) => item.id === itemId)
@@ -99,6 +83,9 @@ export default function RadialOrbitalTimeline({ timelineData, variant = "default
     const nodeIndex = timelineData.findIndex((item) => item.id === nodeId)
     if (nodeIndex === -1) return
 
+    // Since we're using CSS animation, we disable autoRotate when a node is selected.
+    // We can still set the rotationAngle for initial static placement if needed,
+    // but the CSS animation will take over when autoRotate is true.
     const targetAngle = (nodeIndex / timelineData.length) * 360
     setRotationAngle(270 - targetAngle)
   }
@@ -142,6 +129,7 @@ export default function RadialOrbitalTimeline({ timelineData, variant = "default
   }
 
   const calculateNodePosition = (index: number, total: number) => {
+    // rotationAngle is now 0 when autoRotate is true to allow CSS animation to handle it.
     const angle = ((index / total) * 360 + rotationAngle) % 360
     const radian = (angle * Math.PI) / 180
     const x = orbitOffsetX + orbitRadius * Math.cos(radian)
@@ -207,7 +195,7 @@ export default function RadialOrbitalTimeline({ timelineData, variant = "default
 
       <div
         className={cn(
-          "relative hidden items-center justify-center overflow-hidden rounded-[2rem] border border-zyra-border-subtle bg-[radial-gradient(circle_at_center,rgba(57,255,135,0.08),transparent_32%),linear-gradient(180deg,rgba(14,14,14,0.96)_0%,rgba(7,7,7,1)_100%)] px-6 py-16 md:flex",
+          "relative hidden items-center justify-center overflow-hidden rounded-[2rem] border border-zyra-border-subtle bg-[radial-gradient(circle_at_center,rgba(57,255,135,0.12),transparent_48%),linear-gradient(180deg,rgba(14,14,14,0.96)_0%,rgba(7,7,7,1)_100%)] px-6 py-16 md:flex",
           isServicesVariant ? "min-h-[760px] xl:px-10" : "min-h-[820px]"
         )}
         onClick={(event) => {
@@ -216,92 +204,117 @@ export default function RadialOrbitalTimeline({ timelineData, variant = "default
           }
         }}
       >
-        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(57,255,135,0.14),transparent_55%)] opacity-70" />
-        <div
-          className={cn(
-            "pointer-events-none absolute rounded-full border border-zyra-accent-neon/10",
-            isServicesVariant ? "h-[21rem] w-[21rem] lg:h-[25rem] lg:w-[25rem]" : "h-[24rem] w-[24rem] lg:h-[28rem] lg:w-[28rem]"
-          )}
-        />
-        <div
-          className={cn(
-            "pointer-events-none absolute rounded-full border border-white/5",
-            isServicesVariant ? "h-[28rem] w-[28rem]" : "h-[32rem] w-[32rem]"
-          )}
-        />
+        {/* Orbit Visualization Group - Adjusted position to prevent clipping while maintaining balance */}
+        <div className="pointer-events-none absolute inset-0 flex items-center justify-center transform-gpu will-change-transform lg:-translate-x-12 lg:mr-24">
+          <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(57,255,135,0.14),transparent_55%)] opacity-70" />
+          <div
+            className={cn(
+              "pointer-events-none absolute rounded-full border border-zyra-accent-neon/10",
+              isServicesVariant ? "h-[21rem] w-[21rem] lg:h-[25rem] lg:w-[25rem]" : "h-[24rem] w-[24rem] lg:h-[28rem] lg:w-[28rem]"
+            )}
+          />
+          <div
+            className={cn(
+              "pointer-events-none absolute rounded-full border border-white/5",
+              isServicesVariant ? "h-[28rem] w-[28rem]" : "h-[32rem] w-[32rem]"
+            )}
+          />
 
-        <div
-          className={cn(
-            "pointer-events-none absolute flex items-center justify-center rounded-full border border-zyra-accent-neon/30 bg-[radial-gradient(circle_at_30%_30%,rgba(255,255,255,0.28),rgba(57,255,135,0.2)_35%,rgba(57,255,135,0.08)_70%,transparent_100%)] shadow-[0_0_40px_rgba(57,255,135,0.22)]",
-            isServicesVariant ? "h-16 w-16" : "h-20 w-20"
-          )}
-        >
-          <div className={cn("absolute rounded-full border border-zyra-accent-neon/15 animate-ping", isServicesVariant ? "h-20 w-20" : "h-24 w-24")} />
-          <div className={cn("absolute rounded-full border border-white/8 animate-ping [animation-delay:600ms]", isServicesVariant ? "h-28 w-28" : "h-32 w-32")} />
-          <Orbit className={cn("text-zyra-accent-neon", isServicesVariant ? "h-6 w-6" : "h-8 w-8")} />
+          <div
+            className={cn(
+              "pointer-events-none absolute z-10 flex items-center justify-center rounded-full border border-zyra-accent-neon/30 bg-[radial-gradient(circle_at_30%_30%,rgba(255,255,255,0.28),rgba(57,255,135,0.2)_35%,rgba(57,255,135,0.08)_70%,transparent_100%)] shadow-[0_0_40px_rgba(57,255,135,0.22)]",
+              isServicesVariant ? "h-16 w-16" : "h-20 w-20"
+            )}
+          >
+            <div className={cn("absolute rounded-full border border-zyra-accent-neon/15 animate-ping", isServicesVariant ? "h-20 w-20" : "h-24 w-24")} />
+            <div className={cn("absolute rounded-full border border-white/8 animate-ping [animation-delay:600ms]", isServicesVariant ? "h-28 w-28" : "h-32 w-32")} />
+            <Orbit className={cn("text-zyra-accent-neon", isServicesVariant ? "h-6 w-6" : "h-8 w-8")} />
+          </div>
+
+          {/* Orbit Wrapper with CSS Animation */}
+          <div
+            className={cn(
+              "absolute inset-0 flex items-center justify-center transform-gpu will-change-transform",
+              autoRotate && "animate-orbit"
+            )}
+            style={{
+              animationPlayState: autoRotate ? "running" : "paused",
+              backfaceVisibility: "hidden",
+              perspective: 1000
+            }}
+          >
+            {timelineData.map((item, index) => {
+              const Icon = item.icon
+              const position = calculateNodePosition(index, timelineData.length)
+              const isExpanded = Boolean(expandedItems[item.id])
+              const isRelated = isRelatedToActive(item.id)
+              const isPulsing = Boolean(pulseEffect[item.id])
+
+              return (
+                <div
+                  key={item.id}
+                  ref={(element) => {
+                    nodeRefs.current[item.id] = element
+                  }}
+                  className={cn("absolute transition-all", isServicesVariant ? "duration-500" : "duration-700")}
+                  style={{
+                    transform: `translate(${position.x}px, ${position.y}px)`,
+                    zIndex: isExpanded ? 200 : position.zIndex,
+                    opacity: isExpanded ? 1 : position.opacity,
+                  }}
+                >
+                  {/* Counter-rotate content to keep it upright */}
+                  <div
+                    className={cn(
+                      "transform-gpu will-change-transform",
+                      autoRotate && "animate-orbit-reverse"
+                    )}
+                    style={{ animationPlayState: autoRotate ? "running" : "paused" }}
+                  >
+                    <button
+                      className="pointer-events-auto group relative flex cursor-pointer flex-col items-center"
+                      onClick={(event) => {
+                        event.stopPropagation()
+                        toggleItem(item.id)
+                      }}
+                      type="button"
+                    >
+                      <span
+                        className={cn(
+                          "absolute -inset-2 rounded-full bg-[radial-gradient(circle,rgba(57,255,135,0.24)_0%,rgba(57,255,135,0)_70%)] blur-md transition-opacity duration-300",
+                          isPulsing || isExpanded ? "opacity-100" : "opacity-0"
+                        )}
+                        style={{ width: `${item.energy * 0.45 + 44}px`, height: `${item.energy * 0.45 + 44}px` }}
+                      />
+                      <span
+                        className={cn(
+                          "relative flex items-center justify-center rounded-full border text-white transition-all duration-300",
+                          isServicesVariant ? "h-11 w-11" : "h-12 w-12",
+                          isExpanded
+                            ? "scale-125 border-zyra-accent-neon bg-zyra-accent-neon text-black shadow-[0_0_26px_rgba(57,255,135,0.34)]"
+                            : isRelated
+                              ? "border-white/60 bg-white/20 text-white"
+                              : "border-white/20 bg-black/60 text-white/85"
+                        )}
+                      >
+                        <Icon className={cn(isServicesVariant ? "h-3.5 w-3.5" : "h-4 w-4")} />
+                      </span>
+                      <span
+                        className={cn(
+                          "mt-3 whitespace-nowrap font-semibold uppercase tracking-[0.22em] transition-all duration-300",
+                          isServicesVariant ? "text-[10px]" : "text-[11px]",
+                          isExpanded ? "text-zyra-text-primary" : "text-zyra-text-secondary"
+                        )}
+                      >
+                        {item.title}
+                      </span>
+                    </button>
+                  </div>
+                </div>
+              )
+            })}
+          </div>
         </div>
-
-        {timelineData.map((item, index) => {
-          const Icon = item.icon
-          const position = calculateNodePosition(index, timelineData.length)
-          const isExpanded = Boolean(expandedItems[item.id])
-          const isRelated = isRelatedToActive(item.id)
-          const isPulsing = Boolean(pulseEffect[item.id])
-
-          return (
-            <div
-              key={item.id}
-              ref={(element) => {
-                nodeRefs.current[item.id] = element
-              }}
-              className={cn("absolute transition-all", isServicesVariant ? "duration-500" : "duration-700")}
-              style={{
-                transform: `translate(${position.x}px, ${position.y}px)`,
-                zIndex: isExpanded ? 200 : position.zIndex,
-                opacity: isExpanded ? 1 : position.opacity,
-              }}
-            >
-              <button
-                className="group relative flex cursor-pointer flex-col items-center"
-                onClick={(event) => {
-                  event.stopPropagation()
-                  toggleItem(item.id)
-                }}
-                type="button"
-              >
-                <span
-                  className={cn(
-                    "absolute -inset-2 rounded-full bg-[radial-gradient(circle,rgba(57,255,135,0.24)_0%,rgba(57,255,135,0)_70%)] blur-md transition-opacity duration-300",
-                    isPulsing || isExpanded ? "opacity-100" : "opacity-0"
-                  )}
-                  style={{ width: `${item.energy * 0.45 + 44}px`, height: `${item.energy * 0.45 + 44}px` }}
-                />
-                <span
-                  className={cn(
-                    "relative flex items-center justify-center rounded-full border text-white transition-all duration-300",
-                    isServicesVariant ? "h-11 w-11" : "h-12 w-12",
-                    isExpanded
-                      ? "scale-125 border-zyra-accent-neon bg-zyra-accent-neon text-black shadow-[0_0_26px_rgba(57,255,135,0.34)]"
-                      : isRelated
-                        ? "border-white/60 bg-white/20 text-white"
-                        : "border-white/20 bg-black/60 text-white/85"
-                  )}
-                >
-                  <Icon className={cn(isServicesVariant ? "h-3.5 w-3.5" : "h-4 w-4")} />
-                </span>
-                <span
-                  className={cn(
-                    "mt-3 whitespace-nowrap font-semibold uppercase tracking-[0.22em] transition-all duration-300",
-                    isServicesVariant ? "text-[10px]" : "text-[11px]",
-                    isExpanded ? "text-zyra-text-primary" : "text-zyra-text-secondary"
-                  )}
-                >
-                  {item.title}
-                </span>
-              </button>
-            </div>
-          )
-        })}
 
         <div
           className={cn(
@@ -409,4 +422,8 @@ export default function RadialOrbitalTimeline({ timelineData, variant = "default
       </div>
     </div>
   )
-}
+})
+
+RadialOrbitalTimeline.displayName = "RadialOrbitalTimeline"
+
+export default RadialOrbitalTimeline

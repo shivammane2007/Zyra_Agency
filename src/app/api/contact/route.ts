@@ -23,7 +23,6 @@ export async function POST(request: Request) {
       receivedAt: new Date().toISOString(),
     }
 
-    console.log("[contact-submission]", submission)
 
     return NextResponse.json({
       success: true,

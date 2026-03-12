@@ -11,7 +11,7 @@ const STACK = [
     place: "Client product surfaces",
     about:
       "Next.js, React, TypeScript, and Tailwind CSS used to build interfaces that stay fast, legible, and production-ready.",
-    avatarUrl: "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?q=80&w=1200&auto=format&fit=crop",
+    avatarUrl: "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?q=80&w=1200&auto=format&fit=crop",
     avatarText: "FE",
     accent: "#b7ffc8",
     textOnAccent: "#08130d",
@@ -27,7 +27,7 @@ const STACK = [
     place: "Services and data flows",
     about:
       "Node.js, Python, PostgreSQL, and RPC-oriented service layers selected for maintainability, throughput, and integration depth.",
-    avatarUrl: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?q=80&w=1200&auto=format&fit=crop",
+    avatarUrl: "https://images.unsplash.com/photo-1580489944761-15a19d654956?q=80&w=1200&auto=format&fit=crop",
     avatarText: "BE",
     accent: "#d3ffd9",
     textOnAccent: "#08130d",
@@ -43,7 +43,7 @@ const STACK = [
     place: "Retrieval and agent loops",
     about:
       "RAG pipelines, agent workflows, prompt systems, and evaluation loops designed around observability and repeatable product behavior.",
-    avatarUrl: "https://images.unsplash.com/photo-1623582854588-d60de57fa33f?q=80&w=1200&auto=format&fit=crop",
+    avatarUrl: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?q=80&w=1200&auto=format&fit=crop",
     avatarText: "AI",
     accent: "#c6ffd1",
     textOnAccent: "#08130d",
@@ -59,7 +59,7 @@ const STACK = [
     place: "Release and runtime reliability",
     about:
       "Vercel, Docker, CI/CD, and observability tooling used to keep deployments predictable, rollback-safe, and measurable.",
-    avatarUrl: "https://images.unsplash.com/photo-1636041293178-808a6762ab39?q=80&w=1200&auto=format&fit=crop",
+    avatarUrl: "https://images.unsplash.com/photo-1554151228-14d9def656e4?q=80&w=1200&auto=format&fit=crop",
     avatarText: "OP",
     accent: "#d9ffe3",
     textOnAccent: "#08130d",
