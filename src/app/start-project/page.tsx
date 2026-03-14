@@ -2,6 +2,7 @@
 
 import * as React from "react"
 import { zodResolver } from "@hookform/resolvers/zod"
+import { motion, AnimatePresence } from "framer-motion"
 import { Mail, MapPin, Phone } from "lucide-react"
 import { useForm } from "react-hook-form"
 import { Navbar } from "@/components/navbar/Navbar"
@@ -91,11 +92,15 @@ export default function StartProjectPage() {
 
     if (!response.ok || !data.success) {
       setSubmitError(data.error ?? "Unable to process your inquiry right now. Please try again.")
+      // Auto-dismiss error after 7 seconds
+      setTimeout(() => setSubmitError(null), 7000)
       return
     }
 
     setSubmitMessage(data.message ?? "Inquiry received.")
     reset()
+    // Auto-dismiss success message after 7 seconds
+    setTimeout(() => setSubmitMessage(null), 7000)
   }
 
   return (
@@ -159,6 +164,7 @@ export default function StartProjectPage() {
                             aria-invalid={Boolean(errors.name)}
                             className="h-12 w-full rounded-xl border border-zyra-border-default bg-zyra-bg-primary px-4 text-zyra-text-primary outline-none transition-colors focus:border-zyra-accent-neon"
                             placeholder="Your name"
+                            suppressHydrationWarning
                           />
                         </Field>
                         <Field label="Email" error={errors.email?.message}>
@@ -168,6 +174,7 @@ export default function StartProjectPage() {
                             aria-invalid={Boolean(errors.email)}
                             className="h-12 w-full rounded-xl border border-zyra-border-default bg-zyra-bg-primary px-4 text-zyra-text-primary outline-none transition-colors focus:border-zyra-accent-neon"
                             placeholder="you@company.com"
+                            suppressHydrationWarning
                           />
                         </Field>
                       </div>
@@ -179,6 +186,7 @@ export default function StartProjectPage() {
                             aria-invalid={Boolean(errors.company)}
                             className="h-12 w-full rounded-xl border border-zyra-border-default bg-zyra-bg-primary px-4 text-zyra-text-primary outline-none transition-colors focus:border-zyra-accent-neon"
                             placeholder="Company or team"
+                            suppressHydrationWarning
                           />
                         </Field>
                         <Field label="Budget or stage" error={errors.budget?.message}>
@@ -187,6 +195,7 @@ export default function StartProjectPage() {
                             aria-invalid={Boolean(errors.budget)}
                             className="h-12 w-full rounded-xl border border-zyra-border-default bg-zyra-bg-primary px-4 text-zyra-text-primary outline-none transition-colors focus:border-zyra-accent-neon"
                             placeholder="Range, phase, or timeline"
+                            suppressHydrationWarning
                           />
                         </Field>
                       </div>
@@ -198,6 +207,7 @@ export default function StartProjectPage() {
                           aria-invalid={Boolean(errors.message)}
                           className="w-full rounded-xl border border-zyra-border-default bg-zyra-bg-primary px-4 py-3 text-zyra-text-primary outline-none transition-colors focus:border-zyra-accent-neon"
                           placeholder="What are you building, what is blocked, and what outcome matters most?"
+                          suppressHydrationWarning
                         />
                       </Field>
 
@@ -205,21 +215,38 @@ export default function StartProjectPage() {
                         type="submit"
                         disabled={isSubmitting}
                         className="inline-flex h-12 items-center justify-center rounded-full bg-zyra-accent-neon px-6 font-medium text-black transition-opacity hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-60"
+                        suppressHydrationWarning
                       >
                         {isSubmitting ? "Sending..." : "Send inquiry"}
                       </button>
 
-                      {submitMessage && (
-                        <p className="rounded-xl border border-zyra-accent-neon/30 bg-zyra-accent-glow px-4 py-3 text-sm text-zyra-text-primary">
-                          {submitMessage}
-                        </p>
-                      )}
+                      <AnimatePresence mode="wait">
+                        {submitMessage && (
+                          <motion.p
+                            initial={{ opacity: 0, y: 10 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            exit={{ opacity: 0, y: -10 }}
+                            transition={{ duration: 0.3 }}
+                            className="rounded-xl border border-zyra-accent-neon/30 bg-zyra-accent-glow px-4 py-3 text-sm text-zyra-text-primary"
+                          >
+                            {submitMessage}
+                          </motion.p>
+                        )}
+                      </AnimatePresence>
 
-                      {submitError && (
-                        <p className="rounded-xl border border-red-500/30 bg-red-500/10 px-4 py-3 text-sm text-red-300">
-                          {submitError}
-                        </p>
-                      )}
+                      <AnimatePresence mode="wait">
+                        {submitError && (
+                          <motion.p
+                            initial={{ opacity: 0, y: 10 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            exit={{ opacity: 0, y: -10 }}
+                            transition={{ duration: 0.3 }}
+                            className="rounded-xl border border-red-500/30 bg-red-500/10 px-4 py-3 text-sm text-red-300"
+                          >
+                            {submitError}
+                          </motion.p>
+                        )}
+                      </AnimatePresence>
                     </div>
 
                     <div className="flex flex-1 items-center justify-center pt-8">

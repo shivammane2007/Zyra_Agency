@@ -20,6 +20,8 @@ export const metadata: Metadata = {
   description: "Trusted by founders, startups, and creators worldwide",
 };
 
+import { SmoothScrollProvider } from "@/components/providers/SmoothScrollProvider";
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -36,7 +38,9 @@ export default function RootLayout({
           enableSystem={false}
           disableTransitionOnChange
         >
-          {children}
+          <SmoothScrollProvider>
+            {children}
+          </SmoothScrollProvider>
         </ThemeProvider>
       </body>
     </html>

@@ -54,6 +54,8 @@ function MagneticButton({ children, className, href }: { children: React.ReactNo
     </motion.div>
   )
 }
+import Image from "next/image"
+
 function NavbarComponent() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = React.useState(false)
   const [activeSection, setActiveSection] = React.useState("")
@@ -157,7 +159,7 @@ function NavbarComponent() {
             <motion.div style={{ scale: logoScale }} className="flex-shrink-0 origin-left">
               <Link
                 href="/"
-                className="font-heading text-2xl font-bold tracking-tight text-zyra-text-primary"
+                className="group relative flex items-center transition-opacity hover:opacity-90"
                 onClick={(e) => {
                   if (window.location.pathname === "/") {
                     e.preventDefault()
@@ -166,7 +168,21 @@ function NavbarComponent() {
                   }
                 }}
               >
-                Zyra
+                <div className="relative flex items-center gap-3">
+                  <div className="relative h-10 w-auto sm:h-12 flex items-center">
+                    <Image
+                      src="/logo/logo.jpeg"
+                      alt="Zyra Logo"
+                      width={120}
+                      height={48}
+                      className="h-8 w-auto sm:h-10 object-contain brightness-110 drop-shadow-[0_0_8px_rgba(57,255,135,0.2)]"
+                      priority
+                    />
+                  </div>
+                  <span className="font-heading text-xl sm:text-2xl font-bold tracking-tight text-zyra-text-primary">
+                    Zyra
+                  </span>
+                </div>
               </Link>
             </motion.div>
 

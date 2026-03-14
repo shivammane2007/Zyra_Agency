@@ -40,6 +40,7 @@ export function LocationTag({
       onMouseLeave={() => setIsHovered(false)}
       className="group relative flex items-center gap-3 rounded-full border border-zyra-border-default/80 bg-zyra-bg-secondary/80 px-4 py-2.5 transition-all duration-500 ease-out hover:border-zyra-accent-neon/30 hover:bg-zyra-bg-secondary hover:shadow-[0_0_20px_rgba(57,255,135,0.08)]"
       type="button"
+      suppressHydrationWarning
     >
       <div className="relative flex items-center justify-center">
         <span className="relative flex h-2 w-2">
