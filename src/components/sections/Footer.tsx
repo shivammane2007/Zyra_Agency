@@ -51,8 +51,8 @@ export function Footer() {
     },
     {
       icon: <Phone size={18} className="text-zyra-accent-neon" />,
-      text: "+91 99999 00000",
-      href: "tel:+919999900000",
+      text: "+91 55501 42098",
+      href: "tel:+915550142098",
     },
     {
       icon: <MapPin size={18} className="text-zyra-accent-neon" />,

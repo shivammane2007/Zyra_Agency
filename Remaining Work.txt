@@ -1,0 +1,6 @@
+1. Debug team.tsx
+2. Make it responsive 
+3. Make optimize for Light theme 
+4. Increase performance (Lighthouse)
+5. Delete unwanted files
+6. Deploy on Vercel

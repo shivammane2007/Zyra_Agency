@@ -4,7 +4,6 @@ import * as React from "react"
 import Link from "next/link"
 import { Menu, X, ArrowRight } from "lucide-react"
 import { motion, AnimatePresence, useScroll, useTransform, useSpring, useMotionValue } from "framer-motion"
-import { ThemeToggle } from "@/components/theme/ThemeToggle"
 import { cn } from "@/lib/utils"
 
 const NAV_LINKS = [
@@ -217,7 +216,6 @@ function NavbarComponent() {
 
             {/* Desktop Actions */}
             <div className="hidden lg:flex items-center gap-6">
-              <ThemeToggle />
               <MagneticButton
                 href="/start-project"
                 className="group relative inline-flex items-center justify-center gap-2 overflow-hidden rounded-full border border-zyra-accent-neon bg-transparent px-6 py-2.5 text-sm font-semibold text-zyra-text-primary transition-all hover:border-zyra-accent-white hover:shadow-[0_0_20px_rgba(57,255,135,0.3)]"
@@ -231,7 +229,6 @@ function NavbarComponent() {
 
             {/* Mobile Menu Button */}
             <div className="flex items-center gap-4 lg:hidden">
-              <ThemeToggle />
               <button
                 type="button"
                 className="inline-flex items-center justify-center rounded-md p-2 text-zyra-text-primary transition-colors hover:bg-zyra-bg-elevated"
