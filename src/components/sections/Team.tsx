@@ -19,7 +19,7 @@ const TEAM = [
     role: "Experience systems",
     description:
       "Shapes visual identity, interfaces, and interaction models that feel premium while staying easy to use.",
-    src: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=3387&auto=format&fit=crop",
+    src: "https://images.unsplash.com/photo-1580489944761-15a19d654956?q=80&w=3322&auto=format&fit=crop",
   },
   {
     name: "Engineering Lead",
