@@ -35,7 +35,6 @@ export function Footer() {
         {
           label: "Careers",
           href: "#",
-          pulse: true,
         },
         { label: "Contact", href: "/#contact" },
       ],
@@ -109,9 +108,6 @@ export function Footer() {
                       {link.label}
                       <ArrowUpRight className="h-3 w-3 opacity-0 group-hover/link:opacity-100 transition-opacity" />
                     </Link>
-                    {link.pulse && (
-                      <span className="absolute top-1 left-[-14px] w-1.5 h-1.5 rounded-full bg-zyra-accent-neon shadow-[0_0_8px_rgba(57,255,135,0.6)] animate-pulse"></span>
-                    )}
                   </li>
                 ))}
               </ul>
