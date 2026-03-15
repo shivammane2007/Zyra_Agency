@@ -31,14 +31,14 @@ export function Hero() {
           pathLengthFifth,
         ]}
       >
-        <div className="flex flex-col items-center justify-center text-center px-6 -mt-110 transform-gpu will-change-transform">
-          <span className="rounded-full border border-white/10 bg-white/5 px-4 py-1 text-xs tracking-widest text-white/70 mb-6">
+        <div className="flex flex-col items-center justify-center text-center px-4 sm:px-6 md:px-8 -mt-60 sm:-mt-80 md:-mt-110 transform-gpu will-change-transform overflow-hidden">
+          <span className="rounded-full border border-white/10 bg-white/5 px-4 py-1 text-[10px] sm:text-xs tracking-[0.15em] sm:tracking-widest text-white/70 mb-6">
             NEXT-GEN PRODUCT DEVELOPMENT
           </span>
-          <h1 className="hero-animated-text text-5xl md:text-7xl font-bold tracking-tight leading-[1.1] max-w-4xl">
+          <h1 className="hero-animated-text text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight leading-[1.1] max-w-[95%] md:max-w-4xl">
             DESIGN. BUILD. LAUNCH. Products That SCALE
           </h1>
-          <p className="mt-6 text-lg md:text-xl text-white/60 max-w-3xl">
+          <p className="mt-6 text-base sm:text-lg lg:text-xl text-white/60 max-w-3xl">
             <b>Designing, Engineering, and Launching Modern Products That Drive Real Impact </b>
 
           </p>

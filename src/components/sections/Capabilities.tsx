@@ -129,7 +129,7 @@ export function Capabilities() {
             hidden: { opacity: 0 },
             visible: { opacity: 1, transition: { staggerChildren: 0.08 } },
           }}
-          className="mt-10 grid gap-6 md:grid-cols-2 xl:grid-cols-3"
+          className="mt-10 grid gap-6 md:grid-cols-2 lg:grid-cols-3"
         >
           {CAPABILITIES.map((item) => {
             const Icon = item.icon
