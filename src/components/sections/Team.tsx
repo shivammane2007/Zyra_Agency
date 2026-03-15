@@ -95,7 +95,7 @@ export function Team() {
           variants={fadeUp}
           className="mt-16"
         >
-          <AnimatedTestimonials testimonials={testimonials} autoplay />
+          <AnimatedTestimonials testimonials={testimonials} />
         </motion.div>
       </div>
     </section>
