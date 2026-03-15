@@ -271,7 +271,7 @@ function NavbarComponent() {
             animate={{ opacity: 1, backdropFilter: "blur(12px)" }}
             exit={{ opacity: 0, backdropFilter: "blur(0px)" }}
             transition={{ duration: 0.3 }}
-            className="fixed inset-0 z-40 bg-zyra-bg-primary/90 pt-24 sm:pt-32 transform-gpu will-change-[opacity,backdrop-filter]"
+            className="fixed inset-0 z-40 bg-zyra-bg-primary/90 pt-32 transform-gpu will-change-[opacity,backdrop-filter]"
           >
             <div className="flex h-full flex-col px-6 transform-gpu">
               <nav className="flex flex-col gap-8">

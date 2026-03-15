@@ -76,7 +76,7 @@ export function Philosophy() {
         </div>
 
         <motion.div
-          className="mt-20 grid grid-cols-1 gap-8 sm:grid-cols-2 lg:mt-24 lg:grid-cols-4"
+          className="mt-20 grid gap-8 sm:grid-cols-2 lg:mt-24"
           variants={containerVariants}
           initial="hidden"
           whileInView="visible"

@@ -107,7 +107,7 @@ export function TechStack() {
           </motion.p>
         </div>
 
-        <div className="mt-16 grid gap-6 md:grid-cols-2 lg:grid-cols-4">
+        <div className="mt-16 grid gap-6 md:grid-cols-2 xl:grid-cols-4">
           {STACK.map((group, index) => (
             <motion.div
               key={group.label}

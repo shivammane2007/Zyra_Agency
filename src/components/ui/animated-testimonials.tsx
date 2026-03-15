@@ -64,11 +64,11 @@ const AnimatedTestimonialsComponent = ({
   }, [autoplay, testimonials.length])
 
   return (
-    <div className={cn("mx-auto w-full max-w-full px-4 py-12 md:max-w-6xl md:px-8 lg:px-12 lg:py-16", className)}>
+    <div className={cn("mx-auto max-w-sm px-4 py-12 md:max-w-6xl md:px-8 lg:px-12 lg:py-16", className)}>
       <div className="relative grid grid-cols-1 gap-12 rounded-[2rem] border border-zyra-border-subtle bg-[radial-gradient(circle_at_top,rgba(57,255,135,0.1),transparent_36%),linear-gradient(160deg,#121212_0%,#080808_100%)] p-6 shadow-[0_24px_80px_rgba(0,0,0,0.34)] md:grid-cols-[0.95fr_1.05fr] md:gap-16 md:p-10 lg:p-12">
         <div className="relative overflow-hidden rounded-[2rem]">
           <div className="absolute inset-0 -z-10 rounded-[2rem] bg-[radial-gradient(circle_at_center,rgba(57,255,135,0.12),transparent_58%)] blur-3xl" />
-          <div className="relative h-[20rem] w-full sm:h-[24rem] md:h-[32rem]">
+          <div className="relative h-[24rem] w-full max-w-md md:h-[32rem]">
             <AnimatePresence initial={false} mode="wait">
               <motion.div
                 key={testimonials[active].src}
