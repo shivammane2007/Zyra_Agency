@@ -6,7 +6,7 @@ import React from "react";
 const transition = {
   duration: 0,
   ease: "linear",
-};
+} as any;
 
 export const GoogleGeminiEffect = ({
   pathLengths,
