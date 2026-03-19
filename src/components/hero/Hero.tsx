@@ -19,7 +19,7 @@ export function Hero() {
 
   return (
     <div
-      className="h-[150vh] md:h-[400vh] bg-black w-full relative pt-40 overflow-clip"
+      className="h-[150vh] md:h-[400vh] bg-black w-full relative pt-20 md:pt-40 overflow-clip"
       ref={ref}
     >
       <GoogleGeminiEffect
@@ -42,7 +42,7 @@ export function Hero() {
             <b>Designing, Engineering, and Launching Modern Products That Drive Real Impact </b>
 
           </p>
-          <div className="mt-10">
+          <div className="mt-6 md:mt-10">
             <button className="rounded-lg bg-white text-black px-6 py-3 font-medium hover:bg-white/90 transition">
              <b>Bring Your IDEA TO LIFE ➤</b>
             </button>

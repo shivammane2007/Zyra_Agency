@@ -1,5 +1,5 @@
 1. [x] Debug team.tsx (Resolved autoplay bug & refreshed portraits)
-2. [ ] Make it responsive 
+2. [x] Make it responsive (Hero & Section refinements complete)
 3. [ ] Make optimize for Light theme 
 4. [ ] Increase performance (Lighthouse)
 5. [x] Delete unwanted files (Phase 1 Cleanup Complete)
