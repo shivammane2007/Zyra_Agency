@@ -16,7 +16,7 @@ export function CTA() {
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
         >
-          <PinContainer title="Start Here" className="h-full" containerClassName="h-full">
+          <PinContainer title="Start Here" className="h-full" containerClassName="h-full" disabled>
             <div className="overflow-hidden rounded-[2rem] border border-zyra-border-subtle bg-[radial-gradient(circle_at_top,rgba(57,255,135,0.14),transparent_45%),linear-gradient(160deg,#151515_0%,#090909_100%)] p-10 text-center sm:p-16">
               <SectionLabel className="mb-6">Start Here</SectionLabel>
               <h2 className="font-heading text-4xl font-bold tracking-tight text-zyra-text-primary sm:text-5xl lg:text-6xl">

@@ -1,3 +1,4 @@
+
 "use client"
 
 import Link from "next/link"
@@ -11,17 +12,20 @@ type PinContainerProps = {
   href?: string
   className?: string
   containerClassName?: string
+  disabled?: boolean
 }
 
 export const PinContainer = (props: PinContainerProps) => {
-  const { children, href, className, containerClassName } = props
+  const { children, href, className, containerClassName, disabled } = props
   const [transform, setTransform] = useState("rotateX(0deg) translateY(0px) scale(1)")
 
   const onMouseEnter = () => {
+    if (disabled) return
     setTransform("rotateX(12deg) translateY(-8px) scale(0.985)")
   }
 
   const onMouseLeave = () => {
+    if (disabled) return
     setTransform("rotateX(0deg) translateY(0px) scale(1)")
   }
 
@@ -41,7 +45,7 @@ export const PinContainer = (props: PinContainerProps) => {
           {children}
         </div>
       </div>
-      <PinPerspective />
+      {!disabled && <PinPerspective />}
     </>
   )
 
