@@ -19,7 +19,7 @@ export function Hero() {
 
   return (
     <div
-      className="h-[400vh] bg-black w-full relative pt-40 overflow-clip"
+      className="h-[150vh] md:h-[400vh] bg-black w-full relative pt-40 overflow-clip"
       ref={ref}
     >
       <GoogleGeminiEffect
@@ -31,11 +31,11 @@ export function Hero() {
           pathLengthFifth,
         ]}
       >
-        <div className="flex flex-col items-center justify-center text-center px-6 -mt-110 transform-gpu will-change-transform">
+        <div className="flex flex-col items-center justify-center text-center px-6 -mt-40 md:-mt-110 transform-gpu will-change-transform">
           <span className="rounded-full border border-white/10 bg-white/5 px-4 py-1 text-xs tracking-widest text-white/70 mb-6">
             NEXT-GEN PRODUCT DEVELOPMENT
           </span>
-          <h1 className="hero-animated-text text-5xl md:text-7xl font-bold tracking-tight leading-[1.1] max-w-4xl">
+          <h1 className="hero-animated-text text-3xl sm:text-5xl md:text-7xl font-bold tracking-tight leading-[1.1] max-w-4xl">
             DESIGN. BUILD. LAUNCH. Products That SCALE
           </h1>
           <p className="mt-6 text-lg md:text-xl text-white/60 max-w-3xl">

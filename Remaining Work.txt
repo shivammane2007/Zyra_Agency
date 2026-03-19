@@ -5,3 +5,4 @@
 5. [x] Delete unwanted files (Phase 1 Cleanup Complete)
 6. [ ] Deploy on Vercel
 7. [x] CTA Card Refinement (Disabled 3D effect for isolation)
+8. [x] FAQ Section Refinement (Removed redundant border line)
