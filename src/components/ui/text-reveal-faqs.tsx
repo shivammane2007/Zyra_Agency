@@ -65,7 +65,7 @@ function FAQsComponent() {
         </Accordion>
       </div>
 
-      <p className="text-zyra-text-secondary mt-10 text-center border-t border-zyra-border-subtle pt-10">
+      <p className="text-zyra-text-secondary mt-12 text-center">
         Can&apos;t find what you&apos;re looking for? Contact our{' '}
         <Link
           href="/start-project"

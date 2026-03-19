@@ -1,4 +1,7 @@
-2. [ ] Make it responsive  
+1. [x] Debug team.tsx (Resolved autoplay bug & refreshed portraits)
+2. [ ] Make it responsive 
+3. [ ] Make optimize for Light theme 
 4. [ ] Increase performance (Lighthouse)
+5. [x] Delete unwanted files (Phase 1 Cleanup Complete)
 6. [ ] Deploy on Vercel
-7. Fix Contact Page, fix Card
+7. [x] CTA Card Refinement (Disabled 3D effect for isolation)
