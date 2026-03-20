@@ -38,15 +38,14 @@ export function WorldMap({
   const svgMap = useMemo(
     () =>
       map.getSVG({
-      <Image
-        src={`data:image/svg+xml;utf8,${encodeURIComponent(svgMap)}`}
-        alt="Map"
-        width={600}
-        height={800}
-        className="w-full h-auto rounded-2xl border border-zyra-border-subtle"
-        quality={60}
-        priority
-      />
+        radius: 0.22,
+        color: theme === "dark" ? "rgba(255,255,255,0.07)" : "rgba(0,0,0,0.05)",
+        shape: "circle",
+      }),
+    [map, theme]
+  )
+
+  const projectPoint = (lat: number, lng: number) => {
     const x = (lng + 180) * (800 / 360)
     const y = (90 - lat) * (400 / 180)
     return { x, y }
@@ -84,7 +83,6 @@ export function WorldMap({
         priority
         sizes="(max-width: 768px) 100vw, 50vw"
         quality={70}
-        placeholder="blur"
       />
 
       <svg
