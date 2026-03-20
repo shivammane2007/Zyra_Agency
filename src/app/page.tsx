@@ -5,6 +5,7 @@ import { Footer } from "@/components/sections/Footer";
 import { PracticalEffect } from "@/components/ui/practical_effect";
 import dynamic from "next/dynamic";
 import { useInView } from "react-intersection-observer";
+import { useEffect, useState } from "react";
 
 const Philosophy = dynamic(() => import("@/components/sections/Philosophy").then(m => m.Philosophy), { ssr: false });
 const BuildWorkflow = dynamic(() => import("@/components/sections/BuildWorkflow").then(m => m.BuildWorkflow), { ssr: false });
@@ -31,6 +32,13 @@ export default function Home() {
   const [resultsRef, resultsInView] = useInView({ triggerOnce: true, rootMargin: "200px" });
   const [techStackRef, techStackInView] = useInView({ triggerOnce: true, rootMargin: "200px" });
   const [ctaRef, ctaInView] = useInView({ triggerOnce: true, rootMargin: "200px" });
+  
+  const [hasMounted, setHasMounted] = useState(false);
+
+  useEffect(() => {
+    const timer = setTimeout(() => setHasMounted(true), 200);
+    return () => clearTimeout(timer);
+  }, []);
 
   return (
     <>
@@ -40,17 +48,17 @@ export default function Home() {
         <div className="relative isolate w-full">
           <PracticalEffect className="-z-10 opacity-45 [mask-image:linear-gradient(to_bottom,transparent_0,black_7rem,black_calc(100%-4rem),transparent_100%)]" />
           <div className="relative z-10">
-            <div ref={philosophyRef} className="relative">{philosophyInView && <Philosophy />}</div>
-            <div ref={buildWorkflowRef} className="relative">{buildWorkflowInView && <BuildWorkflow />}</div>
-            <div ref={whatWeBuildRef} className="relative">{whatWeBuildInView && <WhatWeBuild />}</div>
-            <div ref={capabilitiesRef} className="relative">{capabilitiesInView && <Capabilities />}</div>
-            <div ref={processTimelineRef} className="relative">{processTimelineInView && <ProcessTimeline />}</div>
-            <div ref={projectsRef} className="relative">{projectsInView && <Projects />}</div>
-            <div ref={teamRef} className="relative">{teamInView && <Team />}</div>
-            <div ref={faqRef} className="relative">{faqInView && <FAQSection />}</div>
-            <div ref={resultsRef} className="relative">{resultsInView && <Results />}</div>
-            <div ref={techStackRef} className="relative">{techStackInView && <TechStack />}</div>
-            <div ref={ctaRef} className="relative">{ctaInView && <CTA />}</div>
+            <div ref={philosophyRef} className="relative">{(philosophyInView || hasMounted) && <Philosophy />}</div>
+            <div ref={buildWorkflowRef} className="relative">{(buildWorkflowInView || hasMounted) && <BuildWorkflow />}</div>
+            <div ref={whatWeBuildRef} className="relative">{(whatWeBuildInView || hasMounted) && <WhatWeBuild />}</div>
+            <div ref={capabilitiesRef} className="relative">{(capabilitiesInView || hasMounted) && <Capabilities />}</div>
+            <div ref={processTimelineRef} className="relative">{(processTimelineInView || hasMounted) && <ProcessTimeline />}</div>
+            <div ref={projectsRef} className="relative">{(projectsInView || hasMounted) && <Projects />}</div>
+            <div ref={teamRef} className="relative">{(teamInView || hasMounted) && <Team />}</div>
+            <div ref={faqRef} className="relative">{(faqInView || hasMounted) && <FAQSection />}</div>
+            <div ref={resultsRef} className="relative">{(resultsInView || hasMounted) && <Results />}</div>
+            <div ref={techStackRef} className="relative">{(techStackInView || hasMounted) && <TechStack />}</div>
+            <div ref={ctaRef} className="relative">{(ctaInView || hasMounted) && <CTA />}</div>
           </div>
         </div>
       </main>
