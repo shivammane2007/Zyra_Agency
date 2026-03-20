@@ -1,6 +1,6 @@
 "use client"
 
-import { useMemo, useRef, useState } from "react"
+import { useEffect, useMemo, useRef, useState } from "react"
 import { AnimatePresence, motion } from "framer-motion"
 import DottedMap from "dotted-map"
 import Image from "next/image"
@@ -32,6 +32,11 @@ export function WorldMap({
   const svgRef = useRef<SVGSVGElement>(null)
   const [hoveredLocation, setHoveredLocation] = useState<string | null>(null)
   const { theme } = useTheme()
+  const [mounted, setMounted] = useState(false)
+
+  useEffect(() => {
+    setMounted(true)
+  }, [])
 
   const map = useMemo(() => new DottedMap({ height: 100, grid: "diagonal" }), [])
 
@@ -39,10 +44,10 @@ export function WorldMap({
     () =>
       map.getSVG({
         radius: 0.22,
-        color: theme === "dark" ? "rgba(255,255,255,0.07)" : "rgba(0,0,0,0.05)",
+        color: !mounted || theme === "dark" ? "rgba(255,255,255,0.07)" : "rgba(0,0,0,0.05)",
         shape: "circle",
       }),
-    [map, theme]
+    [map, theme, mounted]
   )
 
   const projectPoint = (lat: number, lng: number) => {
@@ -83,6 +88,7 @@ export function WorldMap({
         priority
         sizes="(max-width: 768px) 100vw, 50vw"
         quality={70}
+        suppressHydrationWarning
       />
 
       <svg
