@@ -4,7 +4,7 @@ import React from "react";
 import { useScroll, useTransform } from "framer-motion";
 import { GoogleGeminiEffect } from "@/components/ui/google-gemini-effect";
 
-export function Hero() {
+function HeroComponent() {
   const ref = React.useRef(null);
   const { scrollYProgress } = useScroll({
     target: ref,
@@ -52,3 +52,4 @@ export function Hero() {
     </div>
   );
 }
+export default React.memo(HeroComponent)

@@ -78,8 +78,10 @@ export function Footer() {
                 <Image
                   src="/logo/logo.jpeg"
                   alt="Zyra Logo"
-                  width={120}
-                  height={48}
+                  width={600}
+                  height={800}
+                  loading="lazy"
+                  quality={60}
                   className="h-8 w-auto object-contain brightness-110 drop-shadow-[0_0_8px_rgba(57,255,135,0.2)]"
                 />
               </div>

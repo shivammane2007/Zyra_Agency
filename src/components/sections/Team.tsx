@@ -1,10 +1,12 @@
 "use client"
 
+import * as React from "react"
 import Link from "next/link"
 import { motion } from "framer-motion"
 import { ArrowUpRight } from "lucide-react"
 import { SectionLabel } from "@/components/ui/SectionLabel"
-import { AnimatedTestimonials, type Testimonial } from "@/components/ui/animated-testimonials"
+import AnimatedTestimonials, { type Testimonial } from "@/components/ui/animated-testimonials"
+import { LazyMotion, domAnimation } from "framer-motion"
 
 const TEAM = [
   {
@@ -46,13 +48,25 @@ const fadeUp = {
   },
 }
 
-export function Team() {
-  const testimonials: Testimonial[] = TEAM.map((member) => ({
-    quote: member.description,
-    name: member.name,
-    designation: member.role,
-    src: member.src,
-  }))
+function TeamComponent() {
+  const testimonials: Testimonial[] = React.useMemo(
+    () => TEAM.map((member) => ({
+      quote: member.description,
+      name: member.name,
+      designation: member.role,
+      src: member.src,
+    })),
+    []
+  );
+
+  // Disable autoplay on mobile devices only
+  const [isMobile, setIsMobile] = React.useState(false);
+  React.useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth <= 768);
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
 
   return (
     <section id="team" className="py-32">
@@ -95,9 +109,12 @@ export function Team() {
           variants={fadeUp}
           className="mt-16"
         >
-          <AnimatedTestimonials testimonials={testimonials} />
+          <LazyMotion features={domAnimation}>
+            <AnimatedTestimonials testimonials={testimonials} autoplay={!isMobile} />
+          </LazyMotion>
         </motion.div>
       </div>
     </section>
   )
 }
+export default React.memo(TeamComponent)

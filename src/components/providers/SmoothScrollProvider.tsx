@@ -23,7 +23,7 @@ export function SmoothScrollProvider({ children }: SmoothScrollProviderProps) {
       gestureOrientation: "vertical",
       smoothWheel: true,
       syncTouch: false,
-      lerp: 0.08,
+      lerp: 0.08, // Optimal for mobile smoothness
       wheelMultiplier: 1,
       touchMultiplier: 2,
       infinite: false,

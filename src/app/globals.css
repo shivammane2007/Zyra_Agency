@@ -30,6 +30,7 @@
 }
 @import "tailwindcss";
 @import "tw-animate-css";
+@import "./heavy-blur.css";
 
 @plugin "tailwindcss-animate";
 
@@ -272,6 +273,7 @@
 
   .will-change-transform {
     will-change: transform;
+    transform: translateZ(0);
   }
 }
 
@@ -292,6 +294,20 @@
     opacity: 1;
     transform: translateY(0) scale(1);
     filter: blur(0);
+  }
+}
+
+@media (max-width: 768px) {
+  @keyframes word-appear {
+    0% {
+      filter: blur(8px);
+    }
+    50% {
+      filter: blur(1px);
+    }
+    100% {
+      filter: blur(0);
+    }
   }
 }
 

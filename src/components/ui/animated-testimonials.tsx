@@ -103,10 +103,11 @@ const AnimatedTestimonialsComponent = ({
                 <Image
                   src={testimonials[active].src}
                   alt={testimonials[active].name}
-                  width={700}
-                  height={900}
+                  width={600}
+                  height={800}
                   priority
-                  sizes="(max-width: 768px) 100vw, 700px"
+                  sizes="(max-width: 768px) 100vw, 50vw"
+                  quality={60}
                   draggable={false}
                   className="h-full w-full rounded-[2rem] object-cover object-center"
                 />
@@ -179,4 +180,4 @@ const AnimatedTestimonialsComponent = ({
   )
 }
 
-export const AnimatedTestimonials = React.memo(AnimatedTestimonialsComponent)
+export default React.memo(AnimatedTestimonialsComponent)

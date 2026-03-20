@@ -1,0 +1,5 @@
+@media (max-width: 768px) {
+  .heavy-blur {
+    backdrop-filter: blur(6px);
+  }
+}

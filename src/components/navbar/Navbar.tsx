@@ -174,8 +174,10 @@ function NavbarComponent() {
                       alt="Zyra Logo"
                       width={120}
                       height={48}
-                      className="h-8 w-auto sm:h-10 object-contain brightness-110 drop-shadow-[0_0_8px_rgba(57,255,135,0.2)]"
                       priority
+                      sizes="(max-width: 768px) 100vw, 50vw"
+                      quality={70}
+                      className="h-8 w-auto sm:h-10 object-contain brightness-110 drop-shadow-[0_0_8px_rgba(57,255,135,0.2)]"
                     />
                   </div>
                   <span className="font-heading text-xl sm:text-2xl font-bold tracking-tight text-zyra-text-primary">
@@ -321,4 +323,4 @@ function NavbarComponent() {
   )
 }
 
-export const Navbar = React.memo(NavbarComponent)
+export default React.memo(NavbarComponent)
