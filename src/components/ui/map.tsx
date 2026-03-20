@@ -51,8 +51,10 @@ export function WorldMap({
   )
 
   const projectPoint = (lat: number, lng: number) => {
-    const x = (lng + 180) * (800 / 360)
-    const y = (90 - lat) * (400 / 180)
+    const safeLat = Number.isFinite(lat) ? lat : 0
+    const safeLng = Number.isFinite(lng) ? lng : 0
+    const x = (safeLng + 180) * (800 / 360)
+    const y = (90 - safeLat) * (400 / 180)
     return { x, y }
   }
 
@@ -78,17 +80,13 @@ export function WorldMap({
       )}
     >
       <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(57,255,135,0.03)_0%,transparent_28%,transparent_72%,rgba(57,255,135,0.03)_100%)]" />
-      <Image
+      <img
         src={`data:image/svg+xml;utf8,${encodeURIComponent(svgMap)}`}
         className="pointer-events-none h-full w-full select-none object-cover opacity-90 [mask-image:linear-gradient(to_bottom,transparent,white_12%,white_88%,transparent)]"
         alt="world map"
         height={495}
         width={1056}
         draggable={false}
-        priority
-        sizes="(max-width: 768px) 100vw, 50vw"
-        quality={70}
-        suppressHydrationWarning
       />
 
       <svg

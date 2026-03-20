@@ -21,11 +21,12 @@ export const TextHoverEffect = ({
   useEffect(() => {
     if (svgRef.current && cursor.x !== null && cursor.y !== null) {
       const svgRect = svgRef.current.getBoundingClientRect();
-      const cxPercentage = ((cursor.x - svgRect.left) / svgRect.width) * 100;
-      const cyPercentage = ((cursor.y - svgRect.top) / svgRect.height) * 100;
+      const cxPercentage = svgRect.width > 0 ? ((cursor.x - svgRect.left) / svgRect.width) * 100 : 50;
+      const cyPercentage = svgRect.height > 0 ? ((cursor.y - svgRect.top) / svgRect.height) * 100 : 50;
+      
       setMaskPosition({
-        cx: `${cxPercentage}%`,
-        cy: `${cyPercentage}%`,
+        cx: `${Number.isFinite(cxPercentage) ? cxPercentage : 50}%`,
+        cy: `${Number.isFinite(cyPercentage) ? cyPercentage : 50}%`,
       });
     }
   }, [cursor]);
