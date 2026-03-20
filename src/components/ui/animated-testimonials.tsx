@@ -69,29 +69,19 @@ const AnimatedTestimonialsComponent = ({
         <div className="relative overflow-hidden rounded-[2rem]">
           <div className="absolute inset-0 -z-10 rounded-[2rem] bg-[radial-gradient(circle_at_center,rgba(57,255,135,0.12),transparent_58%)] blur-3xl" />
           <div className="relative h-[24rem] w-full max-w-md md:h-[32rem]">
-            <AnimatePresence initial={false} mode="wait">
+            {testimonials.map((testimonial, index) => (
               <motion.div
-                key={testimonials[active].src}
-                layout={false}
+                key={testimonial.src}
                 initial={{
                   opacity: 0,
                   scale: 0.93,
-                  // z: -100,
-                  rotate: rotations[active],
+                  rotate: rotations[index],
                 }}
                 animate={{
-                  opacity: 1,
-                  scale: 1,
-                  // z: 0,
-                  rotate: 0,
-                  zIndex: 999,
-                  // y: [0, -18, 0],
-                }}
-                exit={{
-                  opacity: 0,
-                  scale: 0.96,
-                  // z: 100,
-                  rotate: rotations[active],
+                  opacity: index === active ? 1 : 0,
+                  scale: index === active ? 1 : 0.95,
+                  rotate: index === active ? 0 : rotations[index],
+                  zIndex: index === active ? 999 : testimonials.length + 2 - index,
                 }}
                 transition={{
                   duration: 0.45,
@@ -101,11 +91,11 @@ const AnimatedTestimonialsComponent = ({
               >
                 <div className="absolute inset-0 rounded-[2rem] border border-white/8 bg-[linear-gradient(180deg,rgba(255,255,255,0.04)_0%,rgba(255,255,255,0)_36%)]" />
                 <Image
-                  src={testimonials[active].src}
-                  alt={testimonials[active].name}
+                  src={testimonial.src}
+                  alt={testimonial.name}
                   width={600}
                   height={800}
-                  priority
+                  priority={index === 0}
                   sizes="(max-width: 768px) 100vw, 50vw"
                   quality={60}
                   draggable={false}
@@ -113,7 +103,7 @@ const AnimatedTestimonialsComponent = ({
                 />
                 <div className="absolute inset-x-0 bottom-0 h-32 rounded-b-[2rem] bg-gradient-to-t from-black/70 via-black/25 to-transparent" />
               </motion.div>
-            </AnimatePresence>
+            ))}
           </div>
         </div>
 
