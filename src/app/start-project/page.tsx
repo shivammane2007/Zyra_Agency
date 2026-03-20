@@ -109,7 +109,7 @@ export default function StartProjectPage() {
       <div className="relative isolate">
         <PracticalEffect className="-z-10 opacity-40 [mask-image:linear-gradient(to_bottom,transparent_0,black_8rem,black_calc(100%-4rem),transparent_100%)]" />
         <div className="relative z-10">
-          <main className="min-h-screen pt-32">
+          <main className="relative min-h-screen pt-32">
             <section id="start-project" className="mx-auto max-w-7xl px-4 pb-20 sm:px-6 lg:px-8">
               <div className="grid gap-10 lg:grid-cols-[0.9fr_1.1fr]">
                 <div>

@@ -43,5 +43,9 @@ export function SmoothScrollProvider({ children }: SmoothScrollProviderProps) {
     }
   }, [])
 
-  return <>{children}</>
+  return (
+    <div className="relative w-full min-h-screen font-sans antialiased text-zyra-text-primary selection:bg-zyra-accent-neon selection:text-black">
+      {children}
+    </div>
+  )
 }

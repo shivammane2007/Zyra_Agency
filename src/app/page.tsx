@@ -35,22 +35,22 @@ export default function Home() {
   return (
     <>
       <Navbar />
-      <main className="flex min-h-screen flex-col">
+      <main className="relative flex min-h-screen flex-col">
         <Hero />
         <div className="relative isolate w-full">
           <PracticalEffect className="-z-10 opacity-45 [mask-image:linear-gradient(to_bottom,transparent_0,black_7rem,black_calc(100%-4rem),transparent_100%)]" />
           <div className="relative z-10">
-            <div ref={philosophyRef}>{philosophyInView && <Philosophy />}</div>
-            <div ref={buildWorkflowRef}>{buildWorkflowInView && <BuildWorkflow />}</div>
-            <div ref={whatWeBuildRef}>{whatWeBuildInView && <WhatWeBuild />}</div>
-            <div ref={capabilitiesRef}>{capabilitiesInView && <Capabilities />}</div>
-            <div ref={processTimelineRef}>{processTimelineInView && <ProcessTimeline />}</div>
-            <div ref={projectsRef}>{projectsInView && <Projects />}</div>
-            <div ref={teamRef}>{teamInView && <Team />}</div>
-            <div ref={faqRef}>{faqInView && <FAQSection />}</div>
-            <div ref={resultsRef}>{resultsInView && <Results />}</div>
-            <div ref={techStackRef}>{techStackInView && <TechStack />}</div>
-            <div ref={ctaRef}>{ctaInView && <CTA />}</div>
+            <div ref={philosophyRef} className="relative">{philosophyInView && <Philosophy />}</div>
+            <div ref={buildWorkflowRef} className="relative">{buildWorkflowInView && <BuildWorkflow />}</div>
+            <div ref={whatWeBuildRef} className="relative">{whatWeBuildInView && <WhatWeBuild />}</div>
+            <div ref={capabilitiesRef} className="relative">{capabilitiesInView && <Capabilities />}</div>
+            <div ref={processTimelineRef} className="relative">{processTimelineInView && <ProcessTimeline />}</div>
+            <div ref={projectsRef} className="relative">{projectsInView && <Projects />}</div>
+            <div ref={teamRef} className="relative">{teamInView && <Team />}</div>
+            <div ref={faqRef} className="relative">{faqInView && <FAQSection />}</div>
+            <div ref={resultsRef} className="relative">{resultsInView && <Results />}</div>
+            <div ref={techStackRef} className="relative">{techStackInView && <TechStack />}</div>
+            <div ref={ctaRef} className="relative">{ctaInView && <CTA />}</div>
           </div>
         </div>
       </main>
