@@ -59,14 +59,6 @@ function TeamComponent() {
     []
   );
 
-  // Disable autoplay on mobile devices only
-  const [isMobile, setIsMobile] = React.useState(false);
-  React.useEffect(() => {
-    const checkMobile = () => setIsMobile(window.innerWidth <= 768);
-    checkMobile();
-    window.addEventListener('resize', checkMobile);
-    return () => window.removeEventListener('resize', checkMobile);
-  }, []);
 
   return (
     <section id="team" className="py-32">
@@ -110,7 +102,7 @@ function TeamComponent() {
           className="mt-16"
         >
           <LazyMotion features={domAnimation}>
-            <AnimatedTestimonials testimonials={testimonials} autoplay={!isMobile} />
+            <AnimatedTestimonials testimonials={testimonials} autoplay={false} />
           </LazyMotion>
         </motion.div>
       </div>
